@@ -1,0 +1,183 @@
+/* Global definitions */
+:root {
+  --color-primary: #e8b023;
+  --color-primary-1: #f5c549;
+  --color-primary-2: #fff1cd;
+  --color-primary+1: #c79924;
+  --color-secondary: #188aca;
+  --color-secondary-1: #61b2df;
+  --color-secondary-2: #e8f7ff;
+  --color-secondary+1: #1677ad;
+  --color-secondary+2: #115f8b;
+}
+
+/* -- CSS Reset Block -- */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  /* font: inherit; */
+  vertical-align: baseline;
+}
+nav {
+  margin: 0;
+  border: 0;
+  font-size: 0%;
+  /* font: inherit; */
+  vertical-align: baseline;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* -- added -- */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+html {
+  box-sizing: border-box;
+
+  webkit-text-size-adjust: none;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* NextJS default globals */
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  /* added in Overpass, relying on Next's Head comopnent in the index.js file */
+  font-family: "Rubik", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: #666;
+  line-height: 1.4;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input[type="submit"] {
+  letter-spacing: 1px;
+}
+.helpicon {
+  margin-top: 0.5rem;
+}
