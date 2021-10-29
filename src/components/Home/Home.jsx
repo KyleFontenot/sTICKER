@@ -4,8 +4,8 @@ import styles from "../../styles/Home.module.scss";
 const Home = () => {
   return (
     <div className={styles.gridwrapper}>
-      <MainLogo />
-      <SearchBox description />
+      <MainLogo className={styles.mainlogo} />
+      <SearchBox description className={styles.searchBox} />
     </div>
   );
 };
