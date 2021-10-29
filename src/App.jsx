@@ -1,5 +1,5 @@
 // import type { Component } from "solid-js";
-import { lazy } from "solid-js";
+import { lazy, onMount } from "solid-js";
 import { Routes, Route, Link } from "solid-app-router";
 
 // import logo from "./logo.svg";
@@ -11,6 +11,9 @@ const Home = lazy(() => import("./components/Home/Home"));
 // const NotFound = lazy(() => import("/pages/[...all].js"));
 
 const App = () => {
+  onMount(() => {
+    console.log("hello");
+  });
   return (
     <>
       <h1>Awesome Site</h1>

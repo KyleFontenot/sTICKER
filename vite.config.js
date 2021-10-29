@@ -9,11 +9,3 @@ module.exports = {
     polyfillDynamicImport: false,
   },
 };
-
-// export default defineConfig({
-//   plugins: [solidPlugin(), solidSVG()],
-//   build: {
-//     target: "esnext",
-//     polyfillDynamicImport: false,
-//   },
-// });

@@ -1,4 +1,5 @@
 import styles from "./SearchBox.module.scss";
+import { createSignal, For } from "solid-js";
 // import LoadingIcon from "../LoadingIcon/LoadingIcon";
 // import MainLogo from "../MainLogo/MainLogo";
 // import SearchIcon from '/searchicon.png'
@@ -8,13 +9,16 @@ import { useStateProvider } from "../StateProvider";
 import SvgHelpTip from "../../images/helptip.svg";
 
 const listOfSymbols = ["fcre", "aapl", "imuc"];
+let inputBox;
 
 const SearchBox = (props) => {
   const [count, { increment, decrement }] = useStateProvider();
+  const [inputValue, setInputValue] = createSignal(null);
+  const [availableStocks, setAvailableStocks] = createSignal([]);
 
   const handleInputChange = (e) => {
-    if (listOfSymbols.some((res) => res.includes(e.target.value))) {
-    }
+    setInputValue(e.target.value);
+    inputValue.some();
   };
 
   return (
@@ -25,11 +29,27 @@ const SearchBox = (props) => {
           maxLength="4"
           name="first"
           id="first"
+          ref={inputBox}
           placeholder="Search stock by symbol"
           className={styles.searchBoxInput}
-          onChange={(e) => handleInputChange(e)}
+          onInput={(e) => handleInputChange(e)}
         />
-        <StockCard />
+        <p>{inputValue}</p>
+        <div className={styles.Stock}>
+          <For each={availableStocks()}>
+            {(cat, i) => (
+              <li>
+                <a
+                  target="_blank"
+                  href={`https://www.youtube.com/watch?v=${cat.id}`}
+                >
+                  {i() + 1}: {cat.name}
+                </a>
+              </li>
+            )}
+          </For>
+          <StockCard />
+        </div>
       </div>
       {props.description ? (
         <div className={styles.description}>
