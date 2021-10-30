@@ -1,0 +1,70 @@
+// 768px is tablet size
+
+.wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: minmax(8rem, 1fr);
+  gap: 1rem;
+}
+
+.graphDiv,
+.searchDiv {
+  width: 100%;
+  height: 100%;
+  display: block;
+  min-height: 12rem;
+  & h2 {
+    font-size: 2rem;
+    font-weight: normal;
+    letter-spacing: 1.8px;
+  }
+}
+.graphDiv {
+  padding: 1rem;
+  background-color: #eeeeff;
+}
+.searchDiv {
+  padding: 1rem;
+  background-color: #eee;
+  position: relative;
+  & > div {
+    top: 20%;
+    left: calc(50% - 9rem);
+    position: absolute;
+  }
+}
+
+.correlationsDiv {
+  width: 100%;
+  height: 100%;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  & h3 {
+    width: 100%;
+  }
+  & div {
+    max-width: 18rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: minmax(8rem, 1fr);
+  }
+  .graphDiv {
+    grid-column: span 2;
+  }
+  .searchDiv {
+    grid-column: 3 / 4;
+  }
+  .correlationsDiv {
+    // grid-column: span 3;
+  }
+}

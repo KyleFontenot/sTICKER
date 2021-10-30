@@ -18,7 +18,7 @@
   margin-top: 3rem;
 }
 .searchBox {
-  width: clamp(20rem, 100%, 40rem);
+  width: clamp(8rem, 18rem, 40rem);
   // width: 100%;
   position: relative;
   // overflow: visible;
@@ -26,6 +26,7 @@
   border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
 
   &::after {
     content: " ";

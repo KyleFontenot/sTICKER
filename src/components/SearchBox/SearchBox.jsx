@@ -6,7 +6,50 @@ import StockCard from "../StockCard/StockCard";
 import { useStateProvider } from "../StateProvider";
 import SvgHelpTip from "../../images/helptip.svg";
 
-const listOfSymbols = ["fcre", "aapl", "imuc", "att"];
+const listOfSymbols = [
+  "fcre",
+  "aapl",
+  "imuc",
+  "jgh",
+  "exfo",
+  "atnx",
+  "aav",
+  "cbak",
+  "mcri",
+  "jmei",
+  "ddez",
+  "arr_a",
+  "kbh",
+  "rdwr",
+  "cps",
+  "ebix",
+  "wbs",
+  "tusk",
+  "ccl",
+  "tsem",
+  "bbdo",
+  "luv",
+  "lpth",
+  "or",
+  "dfnd",
+  "vbnd",
+  "ayx",
+  "gatx",
+  "embu",
+  "dwaq",
+  "nbtb",
+  "ric",
+  "bzh",
+  "edom",
+  "spg_j",
+  "eltk",
+  "zfgn",
+  "bbg",
+  "yrcw",
+  "two_a",
+  "plse",
+  "ric",
+];
 
 const SearchBox = (props) => {
   const [count, { increment, decrement }] = useStateProvider();
@@ -22,11 +65,10 @@ const SearchBox = (props) => {
         listOfSymbols.filter((element) => element.includes(e.target.value))
       );
     }
-    console.log(availableStocks());
   }
 
   return (
-    <>
+    <div style={props.style}>
       <div className={styles.searchBox}>
         <input
           type="text"
@@ -65,7 +107,7 @@ const SearchBox = (props) => {
           </p>
         </div>
       ) : null}
-    </>
+    </div>
   );
 };
 

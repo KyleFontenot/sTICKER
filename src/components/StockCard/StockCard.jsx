@@ -1,12 +1,13 @@
 import styles from "./StockCard.module.scss";
-// import { Link } from "solid-app-router";
+import { Link } from "solid-app-router";
 // import { useNavigate } from "solid-app-router";
 // const navigate = useNavigate();
 
 const StockCard = (props) => {
   function handleClick(e) {}
   return (
-    <button
+    <Link
+      href="/compare"
       className={styles.card}
       onClick={(e) => {
         handleClick(e);
@@ -15,7 +16,7 @@ const StockCard = (props) => {
     >
       <div className={styles.badge}>{props.symbol.toUpperCase()}</div>
       <p style={{ display: "inline-block" }}>{props.symbol.toUpperCase()}</p>
-    </button>
+    </Link>
   );
 };
 export default StockCard;

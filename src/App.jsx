@@ -5,6 +5,7 @@ import { Routes, Route, Link } from "solid-app-router";
 // import logo from "./logo.svg";
 // import styles from "./App.module.css";
 import "./styles/globals.css";
+import "./styles/custom.scss";
 
 const Compare = lazy(() => import("./components/Compare/Compare"));
 const Home = lazy(() => import("./components/Home/Home"));

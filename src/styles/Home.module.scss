@@ -5,7 +5,7 @@
   text-align: center;
   position: relative;
   height: 55vh;
-  margin-top: 25%;
+  margin-top: 22%;
   margin-bottom: 10%;
   display: block;
   & > * {
@@ -17,6 +17,7 @@
   position: absolute;
   top: 0%;
   left: 0%;
+  max-width: 20rem;
 }
 .searchBox {
   position: absolute;

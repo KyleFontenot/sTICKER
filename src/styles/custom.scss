@@ -1,0 +1,46 @@
+/* --- Custom  --- */
+
+/* Global definitions */
+
+:root {
+  --color-primary: #e8b023;
+  --color-primary-1: #fff1cd;
+  --color-primary-2: #f5c549;
+  --color-primary-3: #e8b023;
+  --color-primary-4: #c79924;
+  --color-secondary: #188aca;
+  --color-secondary-1: #e8f7ff;
+  --color-secondary-2: #61b2df;
+  --color-secondary-3: #188aca;
+  --color-secondary-4: #1677ad;
+  --color-secondary-5: #115f8b;
+}
+h3,
+h4,
+h5 {
+  font-weight: normal;
+}
+
+.logotitle {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  // cursor: pointer;
+  display: block;
+  padding: 2rem 3rem;
+  transition: text-shadow 0.3s, border 0.3s;
+  color: var(--color-primary);
+  background-color: var(--color-primary-1);
+}
+.mainlogowrapper {
+  margin-inline: auto;
+  // cursor: pointer;
+  text-align: center;
+  background-color: var(--color-primary-1);
+  display: block;
+}
+.fulllayoutlogo {
+  & h1 {
+    font-size: 2rem;
+  }
+}
