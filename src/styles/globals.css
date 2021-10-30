@@ -1,14 +1,16 @@
 /* Global definitions */
 :root {
   --color-primary: #e8b023;
-  --color-primary-1: #f5c549;
-  --color-primary-2: #fff1cd;
-  --color-primary+1: #c79924;
+  --color-primary-1: #fff1cd;
+  --color-primary-2: #f5c549;
+  --color-primary-3: #e8b023;
+  --color-primary-4: #c79924;
   --color-secondary: #188aca;
-  --color-secondary-1: #61b2df;
-  --color-secondary-2: #e8f7ff;
-  --color-secondary+1: #1677ad;
-  --color-secondary+2: #115f8b;
+  --color-secondary-1: #e8f7ff;
+  --color-secondary-2: #61b2df;
+  --color-secondary-3: #188aca;
+  --color-secondary-4: #1677ad;
+  --color-secondary-5: #115f8b;
 }
 
 /* -- CSS Reset Block -- */
