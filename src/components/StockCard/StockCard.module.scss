@@ -1,5 +1,5 @@
 .card {
-  width: 100%;
+  // width: 100%;
   background-color: #fff;
   display: inline-block;
   padding-left: 0.5rem;
@@ -23,13 +23,15 @@
 .cardoutlined {
   border: 1px solid #ddd;
   border-radius: 9px;
-  width: 100%;
   margin-bottom: 0.5rem;
 }
 .cardgrey {
   & .badge {
     background-color: #bbb;
   }
+}
+.fullWidth {
+  width: 100%;
 }
 
 .badge {

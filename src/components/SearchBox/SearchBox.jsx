@@ -85,7 +85,9 @@ const SearchBox = (props) => {
           <div className={styles.stockDiv}>
             <For each={availableStocks()}>
               {(stock) => {
-                return <Dynamic component={StockCard} symbol={stock} />;
+                return (
+                  <Dynamic component={StockCard} symbol={stock} fullWidth />
+                );
               }}
             </For>
           </div>
