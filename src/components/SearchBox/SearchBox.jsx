@@ -3,7 +3,7 @@ import { createSignal, For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 // import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import StockCard from "../StockCard/StockCard";
-import { useStateProvider } from "../StateProvider";
+// import { useGlobalState } from "../StateProvider";
 import SvgHelpTip from "../../images/helptip.svg";
 
 const listOfSymbols = [
@@ -52,8 +52,6 @@ const listOfSymbols = [
 ];
 
 const SearchBox = (props) => {
-  const [count, { increment, decrement }] = useStateProvider();
-  // const [inputValue, setInputValue] = createSignal(null);
   const [availableStocks, setAvailableStocks] = createSignal([]);
 
   async function handleInputChange(e) {
@@ -87,7 +85,6 @@ const SearchBox = (props) => {
           <div className={styles.stockDiv}>
             <For each={availableStocks()}>
               {(stock) => {
-                console.log(stock);
                 return <Dynamic component={StockCard} symbol={stock} />;
               }}
             </For>

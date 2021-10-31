@@ -20,27 +20,57 @@ h4,
 h5 {
   font-weight: normal;
 }
+h4 {
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+}
 
-.logotitle {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  letter-spacing: 2px;
-  // cursor: pointer;
-  display: block;
-  padding: 2rem 3rem;
-  transition: text-shadow 0.3s, border 0.3s;
-  color: var(--color-primary);
-  background-color: var(--color-primary-1);
-}
-.mainlogowrapper {
-  margin-inline: auto;
-  // cursor: pointer;
-  text-align: center;
-  background-color: var(--color-primary-1);
-  display: block;
-}
-.fulllayoutlogo {
-  & h1 {
-    font-size: 2rem;
+.card {
+  width: 100%;
+  background-color: #fff;
+  display: inline-block;
+  padding-left: 0.5rem;
+  padding: 0.75rem;
+  z-index: 40;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-align: left;
+  // box-shadow: 0 0 8px #333333a8;
+  color: #777;
+  border-top: 1px solid #eeeeeea8;
+  &:hover {
+    background-color: #f9f9f9;
   }
+  &:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}
+.cardoutlined {
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.cardgrey {
+  & .badge {
+    background-color: #bbb;
+  }
+}
+
+.badge {
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 6px;
+  display: inline-block;
+  padding: 5px 14px;
+  margin-right: 12px;
+  width: 4rem;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 3;
+  // font-weight: bold;
 }

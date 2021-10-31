@@ -10,6 +10,7 @@
   outline: none;
   text-align: left;
   // box-shadow: 0 0 8px #333333a8;
+  color: #777;
   border-top: 1px solid #eeeeeea8;
   &:hover {
     background-color: #f9f9f9;
@@ -19,6 +20,18 @@
     border-bottom-right-radius: 10px;
   }
 }
+.cardoutlined {
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.cardgrey {
+  & .badge {
+    background-color: #bbb;
+  }
+}
+
 .badge {
   background-color: var(--color-primary);
   color: white;
@@ -29,5 +42,6 @@
   width: 4rem;
   text-align: center;
   font-size: 0.8rem;
+  letter-spacing: 3;
   // font-weight: bold;
 }
