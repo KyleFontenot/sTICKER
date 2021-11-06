@@ -1,0 +1,16 @@
+[role="meter"].sb-meter {
+  display: inline-block;
+  border-radius: var(--border-radius);
+  background: var(--border-color);
+  overflow: hidden;
+  height: 0.85em;
+  width: 8em;
+  position: relative;
+  vertical-align: -0.125em;
+}
+[role="meter"].sb-meter > svg {
+  fill: var(--primary);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}

@@ -21,6 +21,8 @@
   width: clamp(8rem, 18rem, 40rem);
   // width: 100%;
   position: relative;
+  max-height: 40rem;
+  overflow-y: hidden;
   // overflow: visible;
   box-shadow: 0 0 8px #33333338;
   border-radius: 10px;

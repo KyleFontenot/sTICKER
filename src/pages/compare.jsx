@@ -5,19 +5,29 @@ import SearchBox from "../components/SearchBox/SearchBox";
 import state from "../components/StateProvider";
 import { onMount } from "solid-js";
 import { useNavigate } from "solid-app-router";
+
 const Compare = (props) => {
   const navigate = useNavigate();
+
   // import rooted variables
-  const { stock1, stock2, symbInit1, calibrate1, calibrate2 } = state;
+  const {
+    stock1,
+    stock2,
+    mutate1,
+    mutate2,
+    symbInit1,
+    calibrate1,
+    calibrate2,
+  } = state;
 
   onMount(async () => {
     if (
       !localStorage.getItem("storedstock1") ||
       localStorage.getItem("storedstock1") === {}
     ) {
-      console.log(JSON.parse(localStorage.getItem("storedstock1")).Item.ticker);
-      navigate("/", { replace: true });
-      calibrate1(JSON.parse(localStorage.getItem("storedstock1")).Item.ticker);
+      navigate("/", { replace: false });
+    } else {
+      calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
   });
 
@@ -28,24 +38,37 @@ const Compare = (props) => {
         {/* --- GraphDiv --- */}
         <div className={styles.graphDiv}>
           <div className={styles.mainInfo}>
-            <h2>
-              {!stock1.loading ? "----" : stock1?.Item?.ticker.toUpperCase()}
-            </h2>
-            <h3>$134.45</h3>
+            <h2>{!stock1.loading ? stock1()?.Item?.name : "----"}</h2>
+
+            {/*<h3>
+              {!stock1.loading
+                ? Object.entries(stock1()?.Item?.price)
+                    .sort()
+                    .reverse()
+                    .slice(0, 1)
+                : "----"}
+            </h3>*/}
+
+            <Show when={stock1()}>
+              <h3>
+                {Object.entries(stock1()?.Item?.price)
+                  .sort()
+                  .reverse()
+                  .slice(0, 1)}
+              </h3>
+            </Show>
           </div>
           <table className={styles.mainStats}>
             <tbody>
               <tr>
                 <th>52-week high</th>
                 <th>52-week low</th>
-                <th>volume</th>
                 <th>dividends</th>
               </tr>
               <tr>
-                <td>$250.34</td>
-                <td>$120.34</td>
-                <td>300.5k</td>
-                <td>0.0034</td>
+                <td>{stock1()?.Item?.yearhigh}</td>
+                <td>{stock1()?.Item?.yearlow}</td>
+                <td>{stock1()?.Item?.dividend}</td>
               </tr>
             </tbody>
           </table>
@@ -61,7 +84,7 @@ const Compare = (props) => {
             <button
               style={{ position: "absolute", bottom: "0", left: "0" }}
               onClick={() => {
-                calibrate1("fcre");
+                calibrate1("AAP");
                 console.log(stock1());
               }}
             >
@@ -70,7 +93,7 @@ const Compare = (props) => {
             <button
               style={{ position: "absolute", bottom: "0", left: "5rem" }}
               onClick={() => {
-                calibrate1("8");
+                calibrate1("A");
               }}
             >
               Hit me!

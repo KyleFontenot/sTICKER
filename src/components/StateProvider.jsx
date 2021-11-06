@@ -18,16 +18,19 @@ function StateProvider(props) {
   const [symbInit1, setInit1] = createSignal(null);
   const [symbInit2, setInit2] = createSignal(null);
 
-  const [stock1, mutateStock1] = createResource(symbInit1, fetchData);
-  const [stock2, mutateStock2] = createResource(calibrate2, fetchData);
+  const [stock1, { mutate: mutate1 }] = createResource(symbInit1, fetchData);
+  const [stock2, { mutate: mutate2 }] = createResource(calibrate2, fetchData);
 
-  createEffect(
-    () =>
-      stock1() && localStorage.setItem("storedstock1", JSON.stringify(stock1()))
-  );
+  createEffect(() => {
+    stock1() && localStorage.setItem("storedstock1", JSON.stringify(stock1()));
+  });
 
   function calibrate1(symb) {
-    setInit1(symb);
+    if (typeof symb !== "string") {
+      mutate1(symb);
+    } else {
+      setInit1(symb);
+    }
   }
   function calibrate2(symb) {
     setInit2(symb);
@@ -36,8 +39,8 @@ function StateProvider(props) {
   return {
     stock1,
     stock2,
-    mutateStock1,
-    mutateStock2,
+    mutate1,
+    mutate2,
     symbInit1,
     calibrate1,
     calibrate2,
