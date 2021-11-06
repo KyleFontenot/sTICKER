@@ -4,13 +4,19 @@ import StockCard from "../components/StockCard/StockCard";
 import SearchBox from "../components/SearchBox/SearchBox";
 import state from "../components/StateProvider";
 import { onMount } from "solid-js";
+import { useNavigate } from "solid-app-router";
 const Compare = (props) => {
+  const navigate = useNavigate();
   // import rooted variables
   const { stock1, stock2, symbInit1, calibrate1, calibrate2 } = state;
 
   onMount(async () => {
-    if (!stock1() && localStorage.getItem("storedstock1")) {
+    if (
+      !localStorage.getItem("storedstock1") ||
+      localStorage.getItem("storedstock1") === {}
+    ) {
       console.log(JSON.parse(localStorage.getItem("storedstock1")).Item.ticker);
+      navigate("/", { replace: true });
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")).Item.ticker);
     }
   });
@@ -22,7 +28,9 @@ const Compare = (props) => {
         {/* --- GraphDiv --- */}
         <div className={styles.graphDiv}>
           <div className={styles.mainInfo}>
-            <h2>{stock1()?.Item?.ticker.toUpperCase()}</h2>
+            <h2>
+              {!stock1.loading ? "----" : stock1?.Item?.ticker.toUpperCase()}
+            </h2>
             <h3>$134.45</h3>
           </div>
           <table className={styles.mainStats}>

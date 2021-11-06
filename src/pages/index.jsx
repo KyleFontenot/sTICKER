@@ -9,12 +9,13 @@ import { useNavigate } from "solid-app-router";
 const Home = () => {
   const navigate = useNavigate();
   const { stock1, stock2, symbInit1, calibrate1, calibrate2 } = state;
-  onMount(async () => {
-    if (!stock1() && localStorage.getItem("storedstock1")) {
-      calibrate1(JSON.parse(localStorage.getItem("storedstock1")).Item.ticker);
-      // navigate("/compare", { replace: true });
-    }
-  });
+
+  // onMount(async () => {
+  //   if (!stock1() && localStorage.getItem("storedstock1")) {
+  //     calibrate1(JSON.parse(localStorage.getItem("storedstock1")).Item.ticker);
+  //     // navigate("/compare", { replace: true });
+  //   }
+  // });
 
   return (
     <div className={styles.gridwrapper}>

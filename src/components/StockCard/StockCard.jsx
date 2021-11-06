@@ -1,6 +1,7 @@
 import styles from "./StockCard.module.scss";
 import { Link } from "solid-app-router";
 import { useNavigate } from "solid-app-router";
+
 // import { useGlobalState } from "../StateProvider";
 import state from "../StateProvider";
 
@@ -8,16 +9,15 @@ const StockCard = (props) => {
   const navigate = useNavigate();
   // Weird global conext solution "Withouit context" only in SolidJS
   const { stock1, stock2, calibrate1, calibrate2 } = state;
-  // const [stock1, stock2, { calibrate1, calibrate2 }] = useGlobalState();
-  // console.log(stock1);
-  // const [stock2, { mutateStock2, setSymbol2 }] = useGlobalState();
 
   async function handleClick(e) {
     await calibrate1(props.symbol);
-    setTimeout(() => {
-      console.log(stock1);
-    }, 700);
-    navigate("/compare", { replace: true });
+    navigate("/compare", { replace: false });
+    // if (props.pivot) {
+    //   navigate("/compare", { replace: true });
+    // } else {
+    //   navigate("/compare", { replace: false });
+    // }
   }
 
   return (

@@ -1,5 +1,12 @@
 import styles from "./SearchBox.module.scss";
-import { createSignal, For, Show } from "solid-js";
+import {
+  createSignal,
+  For,
+  Show,
+  createResource,
+  onMount,
+  onCleanup,
+} from "solid-js";
 import { Dynamic } from "solid-js/web";
 // import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import StockCard from "../StockCard/StockCard";
@@ -7,57 +14,80 @@ import StockCard from "../StockCard/StockCard";
 import SvgHelpTip from "../../images/helptip.svg";
 
 const listOfSymbols = [
-  "fcre",
-  "aapl",
-  "imuc",
-  "jgh",
-  "exfo",
-  "atnx",
-  "aav",
-  "cbak",
-  "mcri",
-  "jmei",
-  "ddez",
-  "arr_a",
-  "kbh",
-  "rdwr",
-  "cps",
-  "ebix",
-  "wbs",
-  "tusk",
-  "ccl",
-  "tsem",
-  "bbdo",
-  "luv",
-  "lpth",
-  "or",
-  "dfnd",
-  "vbnd",
-  "ayx",
-  "gatx",
-  "embu",
-  "dwaq",
-  "nbtb",
-  "ric",
-  "bzh",
-  "edom",
-  "spg_j",
-  "eltk",
-  "zfgn",
-  "bbg",
-  "yrcw",
-  "two_a",
-  "plse",
-  "ric",
+  "a",
+  "aap",
+  "abbv",
+  "adbe",
+  "ajg",
+  "akam",
+  "alb",
+  "alk",
+  "amcr",
+  "amp",
+  "aptv",
+  "ba",
+  "bio",
+  "br",
+  "carr",
+  "cb",
+  "ce",
+  "cinf",
+  "cl",
+  "cma",
+  "cme",
+  "cmi",
+  "cnc",
+  "coo",
+  "cost",
+  "crm",
+  "dd",
+  "dgx",
+  "duk",
+  "ebay",
+  "etr",
+  "evrg",
+  "exc",
+  "fang",
+  "fast",
+  "fox",
+  "frt",
+  "ftnt",
+  "gd",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
+  "dux",
 ];
+
+const APILINK = "https://c5fin9n590.execute-api.us-east-2.amazonaws.com/items";
+
+const grabAvailableStocks = async () => {
+  let data = await fetch(APILINK).then((res) => res.json());
+  return data;
+};
 
 const SearchBox = (props) => {
   const [availableStocks, setAvailableStocks] = createSignal([]);
 
+  onCleanup(() => setAvailableStocks([]));
+
   async function handleInputChange(e) {
-    if (e.target.value === "") {
+    if (!e.target.value) {
       setAvailableStocks([]);
-      return;
     } else {
       setAvailableStocks(
         listOfSymbols.filter((element) => element.includes(e.target.value))
@@ -79,9 +109,6 @@ const SearchBox = (props) => {
           autocomplete="off"
         />
         <div className={styles.stockDiv}>
-          {/*<Show when={availableStocks()}>
-            <StockCard></StockCard>
-          </Show>*/}
           <div className={styles.stockDiv}>
             <For each={availableStocks()}>
               {(stock) => {
