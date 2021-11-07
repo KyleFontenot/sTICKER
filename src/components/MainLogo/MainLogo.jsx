@@ -19,7 +19,7 @@ const MainLogo = (props) => {
           style={{
             position: "absolute",
             top: "1.5rem",
-            left: "calc(50% - 9rem)",
+            right: "calc(0% + 2rem)",
           }}
         />
       ) : null}
