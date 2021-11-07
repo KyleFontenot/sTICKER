@@ -59,7 +59,7 @@ const Compare = (props) => {
             <h2>{!stock1.loading ? stock1()?.Item?.name : "----"}</h2>
             <Show when={stock1()}>
               {/* Symbol */}
-              <h3>{stock1().Item.ticker}</h3>
+              <h3>{stock1()?.Item?.ticker}</h3>
             </Show>
           </div>
 
@@ -108,7 +108,7 @@ const Compare = (props) => {
             </tr>
             <tr>
               <td style="text-transform: capitalize;">
-                {stock1()?.Item?.sector.toLowerCase()}
+                {stock1()?.Item?.sector?.toLowerCase()}
               </td>
               <td>{`$${stock1()?.Item?.yearhigh}`}</td>
               <td>{`$${stock1()?.Item?.yearlow}`}</td>
@@ -196,7 +196,7 @@ const Compare = (props) => {
               </Show>
               <For each={stock1()?.Item?.dec_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard symbol={each.name} outlined grey fullWidth />
+                  <StockCard symbol={each?.name} outlined grey fullWidth />
                 )}
               </For>
             </div>
@@ -205,8 +205,8 @@ const Compare = (props) => {
 
         <div style="grid-column: 1 / -1; padding: 2rem 15%;">
           <Show when={stock1()?.Item?.dec_vals}>
-            <h2 style="margin-bottom:1rem;">About {stock1().Item.name}:</h2>
-            <p>{stock1().Item.description}</p>
+            <h2 style="margin-bottom:1rem;">About {stock1()?.Item?.name}:</h2>
+            <p>{stock1()?.Item?.description}</p>
           </Show>
         </div>
       </div>
