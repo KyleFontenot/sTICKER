@@ -27,22 +27,24 @@ const Compare = (props) => {
       !localStorage.getItem("storedstock1") ||
       localStorage.getItem("storedstock1") === {}
     ) {
+      navigate("/");
+    } else if (stock1.error) {
       navigate("/", { replace: true });
     } else {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
-    setTimeout(() => {
-      console.log(stock1());
-    }, 500);
+    // setTimeout(() => {
+    //   console.log(stock1());
+    // }, 500);
   });
 
   createEffect(() => {
     if (stock1()) {
       setlastWeekPercentChange(
         (
-          ((Object.entries(stock1()?.Item?.price[1])[0][1] -
-            Object.entries(stock1()?.Item?.price[0])[0][1]) /
-            Object.entries(stock1()?.Item?.price[1])[0][1]) *
+          ((Object?.entries(stock1()?.Item?.price[1])[0][1] -
+            Object?.entries(stock1()?.Item?.price[0])[0][1]) /
+            Object?.entries(stock1()?.Item?.price[1])[0][1]) *
           100
         ).toFixed(2)
       );
@@ -59,7 +61,7 @@ const Compare = (props) => {
             <h2>{!stock1.loading ? stock1()?.Item?.name : "----"}</h2>
             <Show when={stock1()}>
               {/* Symbol */}
-              <h3>{stock1()?.Item?.ticker}</h3>
+              <h3>{!stock1.loading ? stock1()?.Item?.ticker : "----"}</h3>
             </Show>
           </div>
 
