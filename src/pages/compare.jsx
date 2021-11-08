@@ -27,7 +27,7 @@ const Compare = (props) => {
       !localStorage.getItem("storedstock1") ||
       localStorage.getItem("storedstock1") === {}
     ) {
-      navigate("/", { replace: true });
+      navigate("/", { replace: false });
     } else {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
@@ -37,7 +37,7 @@ const Compare = (props) => {
   });
 
   createEffect(() => {
-    if (!stock1.loading && !stock1.error) {
+    if (stock1()) {
       setlastWeekPercentChange(
         (
           ((Object.entries(stock1()?.Item?.price[1])[0][1] -
