@@ -27,7 +27,7 @@ const Compare = (props) => {
       !localStorage.getItem("storedstock1") ||
       localStorage.getItem("storedstock1") === {}
     ) {
-      navigate("/", { replace: false });
+      navigate("/", { replace: true });
     } else {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }

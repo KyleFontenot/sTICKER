@@ -15,7 +15,7 @@ const StockCard = (props) => {
 
     navigate("/compare");
     if (!props.pivot) {
-      navigate("/compare", { replace: true });
+      navigate("/compare", { replace: false });
     }
   }
 
