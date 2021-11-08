@@ -66,7 +66,10 @@ const Compare = (props) => {
           <div className={styles.priceDiv}>
             <Show when={stock1()}>
               {/* Latest price */}
-              <p>as of {Object.entries(stock1()?.Item?.price[0])[0][0]}</p>
+              <p>
+                as of
+                {stock1() && Object.entries(stock1()?.Item?.price[0])[0][0]}
+              </p>
               <h3>{`$${Object.entries(stock1()?.Item?.price[0])[0][1]}
               `}</h3>
               <br />
