@@ -17,9 +17,11 @@
     "vite-plugin-solid-svg": "^0.1.2"
   },
   "dependencies": {
+    "chart.js": "^3.6.0",
     "gh-pages": "^3.2.3",
     "sass": "^1.43.4",
     "solid-app-router": "^0.1.11",
-    "solid-js": "^1.1.3"
+    "solid-chart.js": "^1.0.7",
+    "solid-js": "^1.2.2"
   }
 }

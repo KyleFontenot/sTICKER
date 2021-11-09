@@ -3,13 +3,19 @@ import MainLogo from "../components/MainLogo/MainLogo";
 import StockCard from "../components/StockCard/StockCard";
 import SearchBox from "../components/SearchBox/SearchBox";
 import state from "../components/StateProvider";
-import { onMount, createEffect, createSignal } from "solid-js";
+import { onMount, createEffect, createSignal, onCleanup } from "solid-js";
 import { useNavigate } from "solid-app-router";
 import IconArrow from "../assets/arrow.svg";
+import Chart from "chart.js/auto";
+
+import SolidChart from "solid-chart.js";
 
 const Compare = (props) => {
   const navigate = useNavigate();
   const [lastWeekPercentChange, setlastWeekPercentChange] = createSignal(0);
+  // const [graphdata, setGraphData] = createSignal(null);
+
+  let chartref;
 
   // import rooted variables
   const {
@@ -31,6 +37,7 @@ const Compare = (props) => {
     } else {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
+
     // setTimeout(() => {
     //   console.log(stock1());
     // }, 500);
@@ -46,6 +53,77 @@ const Compare = (props) => {
           100
         ).toFixed(2)
       );
+
+      //  "labels" outside datasets should be the date
+      // the data property should be the one inside the data set.
+      console.log(
+        Object.entries(stock1().Item.price.slice(0, 11)).map(
+          (entry) => Object.entries(entry[1])[0][0]
+        )
+      );
+      // console.log(stock1()?.Item?.price[0]);
+
+      const myChart = new Chart(chartref, {
+        type: "line",
+        data: {
+          labels: Object.entries(stock1().Item.price.slice(0, 11)).map(
+            (entry) => Object.entries(entry[1])[0][0]
+          ),
+          datasets: [
+            {
+              data: Object.entries(stock1().Item.price.slice(0, 11)).map(
+                (entry) => Object.entries(entry[1])[0][1]
+              ),
+              backgroundColor: "#00dd5538",
+              borderColor: "green",
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: false,
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+            },
+          },
+        },
+      });
+
+      // const myChart = new Chart(chartref, {
+      //   type: "line",
+      //   data: {
+      //     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      //     datasets: [
+      //       {
+      //         data: [12, 19, 3, 5, 2, 3],
+      //         backgroundColor: "#00dd5538",
+      //         borderColor: "green",
+      //         borderWidth: 2,
+      //       },
+      //     ],
+      //   },
+      //   options: {
+      //     responsive: true,
+      //     maintainAspectRatio: false,
+      //     plugins: {
+      //       legend: false,
+      //     },
+      //     scales: {
+      //       y: {
+      //         beginAtZero: false,
+      //       },
+      //     },
+      //   },
+      // });
+
+      onCleanup(() => {
+        myChart.destroy();
+      });
     }
   });
 
@@ -67,7 +145,7 @@ const Compare = (props) => {
             <Show when={stock1()}>
               {/* Latest price */}
               <p>
-                as of
+                as of &nbsp;
                 {stock1() && Object.entries(stock1()?.Item?.price[0])[0][0]}
               </p>
               <h3>{`$${Object.entries(stock1()?.Item?.price[0])[0][1]}
@@ -122,33 +200,16 @@ const Compare = (props) => {
 
         {/* --- GraphDiv --- */}
         <div className={styles.graphDiv}>
-          <div>
-            {stock1.isLoading ? (
+          {/*{stock1.isLoading ? (
               <p>Loading...</p>
             ) : (
               <p style="max-height:8rem; overflow:hidden; margin-top:8rem;">
                 {JSON.stringify(stock1()?.Item?.price)}
               </p>
             )}
-            <br />
-            <button
-              style={{ position: "absolute", bottom: "0", left: "0" }}
-              onClick={() => {
-                calibrate1("AAP");
-                console.log(stock1());
-              }}
-            >
-              Hit me!
-            </button>
-            <button
-              style={{ position: "absolute", bottom: "0", left: "5rem" }}
-              onClick={() => {
-                calibrate1("A");
-              }}
-            >
-              Hit me!
-            </button>
-          </div>
+            <br />*/}
+
+          <canvas ref={chartref} class={styles.graph}></canvas>
         </div>
 
         {/* --- SearchDiv --- */}

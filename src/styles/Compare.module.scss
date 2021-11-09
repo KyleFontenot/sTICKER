@@ -32,6 +32,11 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+.graph {
+  width: 100%;
+  display: block;
+}
+
 .mainInfo {
   display: flex;
   flex-direction: column;
@@ -84,11 +89,24 @@
     font-size: 0.8rem;
     text-transform: uppercase;
     color: #aaa;
-    padding: 0.7rem 0 0.1rem;
+    padding: 0.9rem 0.5rem 0.1rem;
+    &:last-child {
+      padding-right: 1.4rem;
+    }
+    &:first-child {
+      padding-left: 1.4rem;
+    }
   }
   & td {
     font-weight: normal;
-    padding: 0.1rem 0 0.7rem;
+    padding: 0.1rem 0.5rem 0.9rem;
+    text-align: center;
+    &:last-child {
+      padding-right: 1.4rem;
+    }
+    &:first-child {
+      padding-left: 1.4rem;
+    }
   }
   & * {
     border-radius: 10px;
@@ -101,7 +119,8 @@
   }
   & td,
   & th {
-    width: 7rem;
+    // width: 7rem;
+    // padding: 5px 10px;
     text-align: center;
   }
 }
