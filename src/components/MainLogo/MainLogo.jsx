@@ -6,14 +6,35 @@ import SearchBox from "../SearchBox/SearchBox";
 const MainLogo = (props) => {
   return (
     <div classList={{ mainlogowrapper: props.full }}>
-      <h1
+      {props.full ? (
+        <Link
+          href="/"
+          style="font-weight:bold;"
+          classList={{
+            [styles.logotitle]: true,
+            [styles.fulllayoutlogo]: props.full === true,
+          }}
+        >
+          sTICKER
+        </Link>
+      ) : (
+        <h1
+          classList={{
+            [styles.logotitle]: true,
+            [styles.fulllayoutlogo]: props.full === true,
+          }}
+        >
+          sTICKER
+        </h1>
+      )}
+      {/*<h1
         classList={{
           [styles.logotitle]: true,
           [styles.fulllayoutlogo]: props.full === true,
         }}
       >
         sTICKER
-      </h1>
+      </h1>*/}
       {props.full ? (
         <SearchBox
           style={{

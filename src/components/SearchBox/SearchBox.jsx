@@ -82,7 +82,7 @@ const grabAvailableStocks = async () => {
 
 const SearchBox = (props) => {
   const [availableStocks, setAvailableStocks] = createSignal([]);
-
+  let inputref;
   onCleanup(() => setAvailableStocks([]));
 
   async function handleInputChange(e) {
@@ -101,18 +101,31 @@ const SearchBox = (props) => {
         <input
           type="text"
           maxLength="4"
-          name="first"
-          id="first"
+          ref={inputref}
           placeholder="Search stock by symbol"
           className={styles.searchBoxInput}
           onInput={(e) => handleInputChange(e)}
+          onFocusOut={() => {
+            // settimeout to allow focusOut behavior while allowing navigate in Router to work.
+            setTimeout(() => {
+              inputref.value = "";
+              setAvailableStocks([]);
+            }, 100);
+          }}
           autocomplete="off"
         />
         <div className={styles.stockDiv}>
           <div className={styles.stockDiv}>
             <For each={availableStocks()}>
               {(stock) => {
-                return (
+                return props.comparing ? (
+                  <Dynamic
+                    component={StockCard}
+                    symbol={stock}
+                    comparing
+                    fullWidth
+                  />
+                ) : (
                   <Dynamic component={StockCard} symbol={stock} fullWidth />
                 );
               }}

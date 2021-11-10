@@ -12,9 +12,7 @@ const StockCard = (props) => {
 
   async function handleClick(e) {
     await calibrate1(props.symbol.toUpperCase());
-
-    navigate("/compare");
-    if (!props.pivot) {
+    if (!props.comparing) {
       navigate("/compare", { replace: false });
     }
   }
@@ -26,13 +24,14 @@ const StockCard = (props) => {
         [styles.cardoutlined]: props.outlined,
         [styles.cardgrey]: props.grey,
         [styles.fullWidth]: props.fullWidth,
-        [props.className]: props.className,
       }}
       onClick={(e) => {
         handleClick(e);
       }}
     >
-      <div className="badge">{props.symbol}</div>
+      <div classList={{ [styles.comparing]: props.comparing, badge: true }}>
+        {props.symbol.toUpperCase()}
+      </div>
       <p style={{ display: "inline-block" }}>{props.symbol.toUpperCase()}</p>
     </button>
   );

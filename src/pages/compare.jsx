@@ -37,45 +37,42 @@ const Compare = (props) => {
     } else {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
-
-    // setTimeout(() => {
-    //   console.log(stock1());
-    // }, 500);
   });
+
+  function differenceInWeekPrice(latestWeekPrice, previousWeekPrice) {
+    return (
+      ((previousWeekPrice - latestWeekPrice) / previousWeekPrice) *
+      100
+    ).toFixed(2);
+  }
 
   createEffect(() => {
     if (stock1()) {
-      setlastWeekPercentChange(
-        (
-          ((Object.entries(stock1()?.Item?.price[1])[0][1] -
-            Object.entries(stock1()?.Item?.price[0])[0][1]) /
-            Object.entries(stock1()?.Item?.price[1])[0][1]) *
-          100
-        ).toFixed(2)
-      );
+      let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
+      let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
 
-      //  "labels" outside datasets should be the date
-      // the data property should be the one inside the data set.
-      console.log(
-        Object.entries(stock1().Item.price.slice(0, 11)).map(
-          (entry) => Object.entries(entry[1])[0][0]
-        )
-      );
-      // console.log(stock1()?.Item?.price[0]);
+      setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
 
       const myChart = new Chart(chartref, {
         type: "line",
         data: {
-          labels: Object.entries(stock1().Item.price.slice(0, 11)).map(
-            (entry) => Object.entries(entry[1])[0][0]
+          // X axis labels on bottom
+          labels: Object.entries(
+            stock1().Item.price.slice(0, 11)
+          ).map((entry) =>
+            Object.entries(entry[1])[0][0]
+              .replace("-", "/")
+              .split("")
+              .slice(5, 14)
+              .join("")
           ),
           datasets: [
             {
               data: Object.entries(stock1().Item.price.slice(0, 11)).map(
                 (entry) => Object.entries(entry[1])[0][1]
               ),
-              backgroundColor: "#00dd5538",
-              borderColor: "green",
+              backgroundColor: "#e8b023",
+              borderColor: "#e8b023",
               borderWidth: 2,
             },
           ],
@@ -94,33 +91,6 @@ const Compare = (props) => {
         },
       });
 
-      // const myChart = new Chart(chartref, {
-      //   type: "line",
-      //   data: {
-      //     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      //     datasets: [
-      //       {
-      //         data: [12, 19, 3, 5, 2, 3],
-      //         backgroundColor: "#00dd5538",
-      //         borderColor: "green",
-      //         borderWidth: 2,
-      //       },
-      //     ],
-      //   },
-      //   options: {
-      //     responsive: true,
-      //     maintainAspectRatio: false,
-      //     plugins: {
-      //       legend: false,
-      //     },
-      //     scales: {
-      //       y: {
-      //         beginAtZero: false,
-      //       },
-      //     },
-      //   },
-      // });
-
       onCleanup(() => {
         myChart.destroy();
       });
@@ -134,11 +104,24 @@ const Compare = (props) => {
         {/* MainInfo div*/}
         <div className={styles.mainInfo}>
           <div>
-            <h2>{!stock1.loading ? stock1()?.Item?.name : "----"}</h2>
-            <Show when={stock1()}>
-              {/* Symbol */}
-              <h3>{!stock1.loading ? stock1()?.Item?.ticker : "----"}</h3>
-            </Show>
+            <h2
+              classList={{ [styles.skeleton]: stock1.loading }}
+              style="display: inline-block;"
+            >
+              {!stock1.loading ? stock1()?.Item?.name : ""}
+            </h2>
+            <p
+              classList={{ [styles.skeleton]: stock1.loading }}
+              style="display: inline-block;margin-left:0.8rem;letter-spacing:1px;"
+            >
+              {!stock1.loading ? "S&P500" : ""}
+            </p>
+            <br />
+
+            {/* Symbol */}
+            <h3 classList={{ [styles.skeleton]: stock1.loading }}>
+              {!stock1.loading ? stock1()?.Item?.ticker : ""}
+            </h3>
           </div>
 
           <div className={styles.priceDiv}>
@@ -169,6 +152,7 @@ const Compare = (props) => {
                     lineHeight: "1rem",
                     top: "5px",
                     position: "relative",
+                    transition: "none!important",
                   }}
                 />
 
@@ -200,22 +184,19 @@ const Compare = (props) => {
 
         {/* --- GraphDiv --- */}
         <div className={styles.graphDiv}>
-          {/*{stock1.isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <p style="max-height:8rem; overflow:hidden; margin-top:8rem;">
-                {JSON.stringify(stock1()?.Item?.price)}
-              </p>
-            )}
-            <br />*/}
-
-          <canvas ref={chartref} class={styles.graph}></canvas>
+          <canvas
+            ref={chartref}
+            classList={{
+              [styles.graph]: true,
+              [styles.skeleton]: stock1.loading,
+            }}
+          ></canvas>
         </div>
 
         {/* --- SearchDiv --- */}
         <div className={styles.searchDiv}>
           <h3>Compare:</h3>
-          <SearchBox />
+          <SearchBox comparing />
         </div>
 
         {/* --- CorrelationsDiv --- */}
@@ -227,40 +208,47 @@ const Compare = (props) => {
             current stock
           </p>
           <br />
-          <Show when={!stock1()?.isLoading} fallback={<p>Loading...</p>}>
+
+          <Show when={!stock1.loading} fallback={<p>Loading...</p>}>
             <div>
               <Show when={stock1()?.Item?.pos_vals}>
                 <h4>Highest Positive Correlations</h4>
               </Show>
               <For each={stock1()?.Item?.pos_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard symbol={each.name} outlined grey fullWidth />
+                  <StockCard symbol={each.name} outlined grey fullWidth pivot />
                 )}
               </For>
             </div>
           </Show>
 
-          <Show when={!stock1()?.isLoading} fallback={<p>Loading...</p>}>
+          <Show when={!stock1.loading} fallback={<p>Loading...</p>}>
             <div>
               <Show when={stock1()?.Item?.neg_vals}>
                 <h4>Most Negative Correlations</h4>
               </Show>
               <For each={stock1()?.Item?.neg_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard symbol={each.name} outlined grey fullWidth />
+                  <StockCard symbol={each.name} outlined grey fullWidth pivot />
                 )}
               </For>
             </div>
           </Show>
 
-          <Show when={!stock1()?.isLoading} fallback={<p>Loading...</p>}>
+          <Show when={!stock1.loading} fallback={<p>Loading...</p>}>
             <div>
               <Show when={stock1()?.Item?.dec_vals}>
-                <h4>Highest Positive Correlations</h4>
+                <h4>Most Unrelated Correlations</h4>
               </Show>
               <For each={stock1()?.Item?.dec_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard symbol={each?.name} outlined grey fullWidth />
+                  <StockCard
+                    symbol={each?.name}
+                    outlined
+                    grey
+                    fullWidth
+                    pivot
+                  />
                 )}
               </For>
             </div>
