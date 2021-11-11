@@ -46,6 +46,67 @@ const Compare = (props) => {
     ).toFixed(2);
   }
 
+  const graphDataObject = (numofstocks) => {
+    return {
+      type: "line",
+      data: {
+        // X axis labels on bottom
+        labels: Object.entries(
+          stock1()?.Item?.price.slice(0, 11)
+        ).map((entry) =>
+          Object.entries(entry[1])[0][0]
+            .replace("-", "/")
+            .split("")
+            .slice(5, 14)
+            .join("")
+        ),
+        datasets:
+          numofstocks === 2
+            ? [graphDataset(stock1()), graphDataset(stock2())]
+            : [graphDataset(stock1())],
+      },
+
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        elements: {
+          points: {
+            borderWidth: 0,
+          },
+        },
+        plugins: {
+          legend: false,
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+              drawTicks: true,
+            },
+          },
+          y: {
+            beginAtZero: false,
+            grid: {
+              display: false,
+            },
+          },
+        },
+      },
+    };
+  };
+
+  const graphDataset = (stockNum) => {
+    return {
+      data: Object.entries(stockNum.Item.price.slice(0, 11)).map(
+        (entry) => Object.entries(entry[1])[0][1]
+      ),
+      backgroundColor: stockNum === stock2() ? "#61b2df" : "#e8b023",
+      borderColor: stockNum === stock2() ? "#61b2df" : "#e8b023",
+      borderWidth: 2,
+      tension: 0.4,
+    };
+  };
+
   createEffect(() => {
     if (stock1()) {
       let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
@@ -53,43 +114,7 @@ const Compare = (props) => {
 
       setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
 
-      const myChart = new Chart(chartref, {
-        type: "line",
-        data: {
-          // X axis labels on bottom
-          labels: Object.entries(
-            stock1().Item.price.slice(0, 11)
-          ).map((entry) =>
-            Object.entries(entry[1])[0][0]
-              .replace("-", "/")
-              .split("")
-              .slice(5, 14)
-              .join("")
-          ),
-          datasets: [
-            {
-              data: Object.entries(stock1().Item.price.slice(0, 11)).map(
-                (entry) => Object.entries(entry[1])[0][1]
-              ),
-              backgroundColor: "#e8b023",
-              borderColor: "#e8b023",
-              borderWidth: 2,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: false,
-          },
-          scales: {
-            y: {
-              beginAtZero: false,
-            },
-          },
-        },
-      });
+      const myChart = new Chart(chartref, graphDataObject(1));
 
       onCleanup(() => {
         myChart.destroy();
