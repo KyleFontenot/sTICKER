@@ -1,10 +1,11 @@
 .card {
-  // width: 100%;
+  width: 100%;
   background-color: #fff;
   display: inline-block;
   padding-left: 0.5rem;
   padding: 0.75rem;
   z-index: 40;
+  position: relative;
   cursor: pointer;
   border: none;
   outline: none;
@@ -25,11 +26,7 @@
   border-radius: 9px;
   margin-bottom: 0.5rem;
 }
-.cardgrey {
-  & .badge {
-    background-color: #bbb;
-  }
-}
+
 .fullWidth {
   width: 100%;
 }
@@ -46,6 +43,28 @@
   font-size: 0.8rem;
   font-weight: bolder;
 }
-.comparing {
-  background-color: var(--color-secondary-2);
+.comparingBadge {
+  background-color: var(--color-secondary-2) !important;
+}
+.filledin {
+  background-color: var(--color-primary-1);
+  border: 1px solid var(--color-primary-2);
+}
+.filledin.comparing {
+  background-color: var(--color-secondary-1);
+  border: 1px solid var(--color-secondary-2);
+}
+.closable {
+  position: absolute;
+  right: calc(1rem - 10px);
+  top: calc(1rem - 11px);
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 8px;
+  z-index: 50;
+  outline: 1px solid transparent;
+  &:hover {
+    background-color: #aaaaaa48;
+    outline: 1px solid #aaaaaab8;
+  }
 }

@@ -97,7 +97,7 @@ const Compare = (props) => {
 
   const graphDataset = (stockNum) => {
     return {
-      data: Object.entries(stockNum.Item.price.slice(0, 11)).map(
+      data: Object.entries(stockNum?.Item?.price.slice(0, 11)).map(
         (entry) => Object.entries(entry[1])[0][1]
       ),
       backgroundColor: stockNum === stock2() ? "#61b2df" : "#e8b023",
@@ -226,14 +226,34 @@ const Compare = (props) => {
         {/* --- SearchDiv --- */}
         <div className={styles.searchDiv}>
           <h3>Compare:</h3>
+          <StockCard
+            symbol={stock1()?.Item?.ticker}
+            outlined
+            grey
+            fullWidth
+            filledin
+          />
+          {stock2() && (
+            <StockCard
+              symbol={stock2()?.Item?.ticker}
+              outlined
+              filledin
+              comparing
+              closable
+            />
+          )}
           <SearchBox comparing />
         </div>
 
         {/* --- CorrelationsDiv --- */}
         <div className={styles.correlationsDiv}>
           <h3>
-            Correlation Matchups with {stock1()?.Item?.name}&nbsp;(
-            {stock1()?.Item?.ticker})
+            Correlation Matchups with{" "}
+            <span style="font-weight: bold;">
+              {stock1()?.Item?.name}
+              &nbsp;(
+              {stock1()?.Item?.ticker})
+            </span>
           </h3>
           <br />
           <p style={{ width: "100%" }}>
@@ -249,7 +269,7 @@ const Compare = (props) => {
               </Show>
               <For each={stock1()?.Item?.pos_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard symbol={each.name} outlined grey fullWidth pivot />
+                  <StockCard symbol={each.name} outlined comparing pivot />
                 )}
               </For>
             </div>
@@ -262,7 +282,7 @@ const Compare = (props) => {
               </Show>
               <For each={stock1()?.Item?.neg_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard symbol={each.name} outlined grey fullWidth pivot />
+                  <StockCard symbol={each.name} outlined comparing pivot />
                 )}
               </For>
             </div>
@@ -275,13 +295,7 @@ const Compare = (props) => {
               </Show>
               <For each={stock1()?.Item?.dec_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard
-                    symbol={each?.name}
-                    outlined
-                    grey
-                    fullWidth
-                    pivot
-                  />
+                  <StockCard symbol={each?.name} outlined pivot comparing />
                 )}
               </For>
             </div>

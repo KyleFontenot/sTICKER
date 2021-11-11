@@ -11,31 +11,55 @@ const StockCard = (props) => {
   const { stock1, stock2, calibrate1, calibrate2 } = state;
 
   async function handleClick(e) {
+    if (props.closable) {
+      await calibrate2(null);
+    }
     if (props.comparing) {
-      await calibrate2(props.symbol.toUpperCase());
+      await calibrate2(props.symbol);
     } else {
+      await calibrate2(null);
       await calibrate1(props.symbol.toUpperCase());
       navigate("/compare", { replace: false });
     }
   }
 
   return (
-    <button
-      classList={{
-        [styles.card]: true,
-        [styles.cardoutlined]: props.outlined,
-        [styles.cardgrey]: props.grey,
-        [styles.fullWidth]: props.fullWidth,
-      }}
-      onClick={(e) => {
-        handleClick(e);
+    <div
+      style={{
+        width: "100%",
+        position: "relative",
       }}
     >
-      <div classList={{ [styles.comparing]: props.comparing, badge: true }}>
-        {props.symbol.toUpperCase()}
-      </div>
-      <p style={{ display: "inline-block" }}>{props.symbol.toUpperCase()}</p>
-    </button>
+      <button
+        classList={{
+          [styles.card]: true,
+          [styles.cardoutlined]: props.outlined,
+          [styles.fullWidth]: props.fullWidth,
+          [styles.filledin]: props.filledin,
+          [styles.comparing]: props.comparing,
+        }}
+        onClick={(e) => {
+          handleClick(e);
+        }}
+      >
+        <div
+          classList={{ [styles.comparingBadge]: props.comparing, badge: true }}
+        >
+          {props.symbol}
+        </div>
+        <p style={{ display: "inline-block" }}>{props.symbol}</p>
+      </button>
+      {props.closable && (
+        <span
+          className={styles.closable}
+          onClick={() => {
+            calibrate2(null);
+          }}
+        >
+          x
+        </span>
+      )}
+    </div>
   );
 };
 export default StockCard;

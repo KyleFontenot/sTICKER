@@ -16,11 +16,11 @@ const fetchData = async (symbol) => {
 };
 
 function StateProvider(props) {
-  const [symbInit1, setInit1] = createSignal(null);
-  const [symbInit2, setInit2] = createSignal(null);
+  const [fetchSignal1, setFetchSignal1] = createSignal(null);
+  const [fetchSignal2, setFetchSignal2] = createSignal(null);
 
-  const [stock1, { mutate: mutate1 }] = createResource(symbInit1, fetchData);
-  const [stock2, { mutate: mutate2 }] = createResource(symbInit2, fetchData);
+  const [stock1, { mutate: mutate1 }] = createResource(fetchSignal1, fetchData);
+  const [stock2, { mutate: mutate2 }] = createResource(fetchSignal2, fetchData);
 
   createEffect(() => {
     stock1() && localStorage.setItem("storedstock1", JSON.stringify(stock1()));
@@ -28,20 +28,21 @@ function StateProvider(props) {
   createEffect(() => {
     stock2() && localStorage.setItem("storedstock2", JSON.stringify(stock2()));
   });
+
   const correlationFactor = createMemo(() => "something");
 
   function calibrate1(symb) {
-    if (typeof symb === "object") {
+    if (typeof symb === "object" || typeof symb === null) {
       mutate1(symb);
     } else {
-      setInit1(symb);
+      setFetchSignal1(symb);
     }
   }
   function calibrate2(symb) {
     if (typeof symb === "object") {
       mutate2(symb);
     } else {
-      setInit2(symb);
+      setFetchSignal2(symb);
     }
   }
 
@@ -50,7 +51,6 @@ function StateProvider(props) {
     stock2,
     mutate1,
     mutate2,
-    symbInit1,
     calibrate1,
     calibrate2,
     correlationFactor,

@@ -134,15 +134,15 @@
   max-width: 30rem;
   margin-inline: auto;
   animation: 3s skeletonanimation 3s infinite alternate ease;
-  & > div {
-    // top: 13%;
-    width: calc(100% - 2rem);
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    // left: calc(50% - 9rem);
-    position: absolute;
-  }
+  // & > div {
+  //   // top: 13%;
+  //   width: calc(100% - 2rem);
+  //   display: flex;
+  //   justify-content: center;
+  //   margin-top: 1rem;
+  //   // left: calc(50% - 9rem);
+  //   position: absolute;
+  // }
 }
 
 .correlationsDiv {
