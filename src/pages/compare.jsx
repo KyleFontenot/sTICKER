@@ -13,7 +13,8 @@ import SolidChart from "solid-chart.js";
 const Compare = (props) => {
   const navigate = useNavigate();
   const [lastWeekPercentChange, setlastWeekPercentChange] = createSignal(0);
-  // const [graphdata, setGraphData] = createSignal(null);
+  // const lastWeekPercentChange = createMemo(() => )
+  // const [lastWeekPercentChange, setlastWeekPercentChange] = createSignal(null);
 
   let chartref;
 
@@ -21,11 +22,10 @@ const Compare = (props) => {
   const {
     stock1,
     stock2,
-    mutate1,
-    mutate2,
     symbInit1,
     calibrate1,
     calibrate2,
+    correlationFactor,
   } = state;
 
   onMount(async () => {
@@ -108,14 +108,19 @@ const Compare = (props) => {
   };
 
   createEffect(() => {
-    if (stock1()) {
+    if (stock2() && stock1()) {
       let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
       let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
-
       setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
-
-      const myChart = new Chart(chartref, graphDataObject(1));
-
+      let myChart = new Chart(chartref, graphDataObject(2));
+      onCleanup(() => {
+        myChart.destroy();
+      });
+    } else if (stock1()) {
+      let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
+      let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
+      setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
+      let myChart = new Chart(chartref, graphDataObject(1));
       onCleanup(() => {
         myChart.destroy();
       });
@@ -213,7 +218,7 @@ const Compare = (props) => {
             ref={chartref}
             classList={{
               [styles.graph]: true,
-              [styles.skeleton]: stock1.loading,
+              [styles.skeleton]: stock1.loading || stock2.loading,
             }}
           ></canvas>
         </div>
@@ -226,7 +231,10 @@ const Compare = (props) => {
 
         {/* --- CorrelationsDiv --- */}
         <div className={styles.correlationsDiv}>
-          <h3>Correlation Matchups with AAPL</h3>
+          <h3>
+            Correlation Matchups with {stock1()?.Item?.name}&nbsp;(
+            {stock1()?.Item?.ticker})
+          </h3>
           <br />
           <p style={{ width: "100%" }}>
             Search for another stock to compute the correlation factor to the

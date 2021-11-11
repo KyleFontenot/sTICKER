@@ -8,7 +8,14 @@ import { useNavigate } from "solid-app-router";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { stock1, stock2, symbInit1, calibrate1, calibrate2 } = state;
+  const {
+    stock1,
+    stock2,
+    symbInit1,
+    calibrate1,
+    calibrate2,
+    correlationFactor,
+  } = state;
 
   // onMount(async () => {
   //   if (!stock1() && localStorage.getItem("storedstock1")) {

@@ -11,8 +11,10 @@ const StockCard = (props) => {
   const { stock1, stock2, calibrate1, calibrate2 } = state;
 
   async function handleClick(e) {
-    await calibrate1(props.symbol.toUpperCase());
-    if (!props.comparing) {
+    if (props.comparing) {
+      await calibrate2(props.symbol.toUpperCase());
+    } else {
+      await calibrate1(props.symbol.toUpperCase());
       navigate("/compare", { replace: false });
     }
   }
