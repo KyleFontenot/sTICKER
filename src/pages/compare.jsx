@@ -100,15 +100,15 @@ const Compare = (props) => {
       data: Object.entries(stockNum?.Item?.price.slice(0, 11)).map(
         (entry) => Object.entries(entry[1])[0][1]
       ),
-      backgroundColor: stockNum === stock2() ? "#61b2df" : "#e8b023",
-      borderColor: stockNum === stock2() ? "#61b2df" : "#e8b023",
+      backgroundColor: stockNum === stock1() ? "#e8b023" : "#61b2df",
+      borderColor: stockNum === stock1() ? "#e8b023" : "#61b2df",
       borderWidth: 2,
       tension: 0.4,
     };
   };
 
   createEffect(() => {
-    if (stock2() && stock1()) {
+    if (!stock2.loading && stock2() && stock1()) {
       let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
       let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
       setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
@@ -125,6 +125,8 @@ const Compare = (props) => {
         myChart.destroy();
       });
     }
+    console.log(stock1()?.Item?.neg_vals);
+    console.log(stock1()?.Item?.pos_vals);
   });
 
   return (
@@ -218,7 +220,7 @@ const Compare = (props) => {
             ref={chartref}
             classList={{
               [styles.graph]: true,
-              [styles.skeleton]: stock1.loading || stock2.loading,
+              [styles.skeleton]: stock2.loading || stock1.loading,
             }}
           ></canvas>
         </div>
@@ -232,6 +234,7 @@ const Compare = (props) => {
             grey
             fullWidth
             filledin
+            classList={{ skeleton: stock1.loading }}
           />
           {stock2() && (
             <StockCard
@@ -242,7 +245,14 @@ const Compare = (props) => {
               closable
             />
           )}
-          <SearchBox comparing />
+          <SearchBox
+            comparing
+            style={{
+              position: "absolute",
+              top: "6.3rem",
+              width: "calc(100% - 2rem)",
+            }}
+          />
         </div>
 
         {/* --- CorrelationsDiv --- */}
@@ -262,11 +272,9 @@ const Compare = (props) => {
           </p>
           <br />
 
-          <Show when={!stock1.loading} fallback={<p>Loading...</p>}>
+          <Show when={stock1()?.Item?.pos_vals !== 0}>
             <div>
-              <Show when={stock1()?.Item?.pos_vals}>
-                <h4>Highest Positive Correlations</h4>
-              </Show>
+              <h4>Highest Positive Correlations</h4>
               <For each={stock1()?.Item?.pos_vals.slice(0, 3)}>
                 {(each, i) => (
                   <StockCard symbol={each.name} outlined comparing pivot />
@@ -275,11 +283,9 @@ const Compare = (props) => {
             </div>
           </Show>
 
-          <Show when={!stock1.loading} fallback={<p>Loading...</p>}>
+          <Show when={stock1()?.Item?.neg_vals.length !== 0}>
             <div>
-              <Show when={stock1()?.Item?.neg_vals}>
-                <h4>Most Negative Correlations</h4>
-              </Show>
+              <h4>Most Negative Correlations</h4>
               <For each={stock1()?.Item?.neg_vals.slice(0, 3)}>
                 {(each, i) => (
                   <StockCard symbol={each.name} outlined comparing pivot />
@@ -288,11 +294,9 @@ const Compare = (props) => {
             </div>
           </Show>
 
-          <Show when={!stock1.loading} fallback={<p>Loading...</p>}>
+          <Show when={stock1()?.Item?.dec_vals.length !== 0}>
             <div>
-              <Show when={stock1()?.Item?.dec_vals}>
-                <h4>Most Unrelated Correlations</h4>
-              </Show>
+              <h4>Most Unrelated Correlations</h4>
               <For each={stock1()?.Item?.dec_vals.slice(0, 3)}>
                 {(each, i) => (
                   <StockCard symbol={each?.name} outlined pivot comparing />
@@ -303,10 +307,8 @@ const Compare = (props) => {
         </div>
 
         <div style="grid-column: 1 / -1; padding: 2rem 15%;">
-          <Show when={stock1()?.Item?.dec_vals}>
-            <h2 style="margin-bottom:1rem;">About {stock1()?.Item?.name}:</h2>
-            <p>{stock1()?.Item?.description}</p>
-          </Show>
+          <h2 style="margin-bottom:1rem;">About {stock1()?.Item?.name}:</h2>
+          <p>{stock1()?.Item?.description}</p>
         </div>
       </div>
     </>

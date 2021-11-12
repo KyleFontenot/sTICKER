@@ -32,6 +32,7 @@ const Home = () => {
         <StockCard
           outlined
           symbol={stock1()?.Item?.ticker}
+          style="margin-top: 1rem; max-width: 15rem;"
           className={styles.stockcard}
         />
       </Show>

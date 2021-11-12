@@ -21,14 +21,14 @@
     border-bottom-right-radius: 10px;
   }
 }
+.container {
+  width: clamp(10rem, 100%, 40rem);
+  position: relative;
+}
 .cardoutlined {
   border: 1px solid #ddd;
   border-radius: 9px;
   margin-bottom: 0.5rem;
-}
-
-.fullWidth {
-  width: 100%;
 }
 
 .badge {

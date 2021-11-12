@@ -41,6 +41,7 @@ const MainLogo = (props) => {
             position: "absolute",
             top: "1.5rem",
             right: "calc(0% + 2rem)",
+            zIndex: "90",
           }}
         />
       ) : null}

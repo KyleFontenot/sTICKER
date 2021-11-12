@@ -11,25 +11,17 @@ const StockCard = (props) => {
   const { stock1, stock2, calibrate1, calibrate2 } = state;
 
   async function handleClick(e) {
-    if (props.closable) {
-      await calibrate2(null);
-    }
     if (props.comparing) {
       await calibrate2(props.symbol);
     } else {
       await calibrate2(null);
-      await calibrate1(props.symbol.toUpperCase());
+      await calibrate1(props.symbol);
       navigate("/compare", { replace: false });
     }
   }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        position: "relative",
-      }}
-    >
+    <div className={styles.container} style={props.style}>
       <button
         classList={{
           [styles.card]: true,

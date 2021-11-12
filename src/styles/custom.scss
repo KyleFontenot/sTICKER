@@ -74,3 +74,47 @@ h4 {
   letter-spacing: 3;
   // font-weight: bold;
 }
+
+.skeleton {
+  background-color: #eee;
+  color: #eee;
+  background: linear-gradient(327deg, #ddd, #f6f6f6, #ddd);
+  background-size: 400% 400%;
+  -webkit-animation: skeletonanimation 1.5s ease infinite;
+  -moz-animation: skeletonanimation 1.5s ease infinite;
+  animation: skeletonanimation 1.5s ease infinite;
+  // transition: background-color 0.2s, color 0.2s;
+}
+@-webkit-keyframes skeletonanimation {
+  0% {
+    background-position: 13% 0%;
+  }
+  50% {
+    background-position: 88% 100%;
+  }
+  100% {
+    background-position: 13% 0%;
+  }
+}
+@-moz-keyframes skeletonanimation {
+  0% {
+    background-position: 13% 0%;
+  }
+  50% {
+    background-position: 88% 100%;
+  }
+  100% {
+    background-position: 13% 0%;
+  }
+}
+@keyframes skeletonanimation {
+  0% {
+    background-position: 13% 0%;
+  }
+  50% {
+    background-position: 88% 100%;
+  }
+  100% {
+    background-position: 13% 0%;
+  }
+}

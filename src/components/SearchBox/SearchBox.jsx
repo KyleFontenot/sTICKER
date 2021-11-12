@@ -54,23 +54,6 @@ const listOfSymbols = [
   "ftnt",
   "gd",
   "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
-  "dux",
 ];
 
 const APILINK = "https://c5fin9n590.execute-api.us-east-2.amazonaws.com/items";
@@ -96,7 +79,7 @@ const SearchBox = (props) => {
   }
 
   return (
-    <div style={props.style}>
+    <div style={props.style} className={styles.container}>
       <div className={styles.searchBox}>
         <input
           type="text"
@@ -110,7 +93,7 @@ const SearchBox = (props) => {
             setTimeout(() => {
               inputref.value = "";
               setAvailableStocks([]);
-            }, 100);
+            }, 200);
           }}
           autocomplete="off"
         />
