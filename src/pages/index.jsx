@@ -17,12 +17,12 @@ const Home = () => {
     correlationFactor,
   } = state;
 
-  // onMount(async () => {
-  //   if (!stock1() && localStorage.getItem("storedstock1")) {
-  //     calibrate1(JSON.parse(localStorage.getItem("storedstock1")).Item.ticker);
-  //     // navigate("/compare", { replace: true });
-  //   }
-  // });
+  onMount(async () => {
+    if (!stock1() && localStorage.getItem("storedstock1")) {
+      calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
+      // navigate("/compare", { replace: false });
+    }
+  });
 
   return (
     <div className={styles.gridwrapper}>

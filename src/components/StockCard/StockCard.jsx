@@ -14,8 +14,8 @@ const StockCard = (props) => {
     if (props.comparing) {
       await calibrate2(props.symbol.toUpperCase());
     } else {
-      await calibrate2(null);
-      await calibrate1(props.symbol);
+      // await calibrate2(null);
+      await calibrate1(props.symbol.toUpperCase());
       navigate("/compare", { replace: false });
     }
   }

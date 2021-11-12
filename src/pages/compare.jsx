@@ -31,7 +31,7 @@ const Compare = (props) => {
   onMount(async () => {
     if (
       !localStorage.getItem("storedstock1") ||
-      localStorage.getItem("storedstock1") === {}
+      !localStorage.getItem("storedstock1") === {}
     ) {
       navigate("/", { replace: true });
     } else {
@@ -51,15 +51,15 @@ const Compare = (props) => {
       type: "line",
       data: {
         // X axis labels on bottom
-        labels: Object.entries(
-          stock1()?.Item?.price.slice(0, 11)
-        ).map((entry) =>
-          Object.entries(entry[1])[0][0]
-            .replace("-", "/")
-            .split("")
-            .slice(5, 14)
-            .join("")
-        ),
+        labels: Object.entries(stock1()?.Item?.price.slice(0, 11))
+          .map((entry) =>
+            Object.entries(entry[1])[0][0]
+              .replace("-", "/")
+              .split("")
+              .slice(5, 14)
+              .join("")
+          )
+          .reverse(),
         datasets:
           numofstocks === 2
             ? [graphDataset(stock1()), graphDataset(stock2())]

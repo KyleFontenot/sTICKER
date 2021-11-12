@@ -79,7 +79,13 @@ const SearchBox = (props) => {
   }
 
   return (
-    <div style={props.style} className={styles.container}>
+    <div
+      style={props.style}
+      classList={{
+        [styles.container]: true,
+        [styles.containerIfComparing]: props.comparing,
+      }}
+    >
       <div className={styles.searchBox}>
         <input
           type="text"

@@ -27,21 +27,13 @@ const MainLogo = (props) => {
           sTICKER
         </h1>
       )}
-      {/*<h1
-        classList={{
-          [styles.logotitle]: true,
-          [styles.fulllayoutlogo]: props.full === true,
-        }}
-      >
-        sTICKER
-      </h1>*/}
       {props.full ? (
         <SearchBox
           style={{
             position: "absolute",
             top: "1.5rem",
             right: "calc(0% + 2rem)",
-            zIndex: "90",
+            zIndex: "300",
           }}
         />
       ) : null}
