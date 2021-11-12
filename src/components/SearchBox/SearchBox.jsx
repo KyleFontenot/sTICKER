@@ -101,16 +101,13 @@ const SearchBox = (props) => {
           <div className={styles.stockDiv}>
             <For each={availableStocks()}>
               {(stock) => {
-                return props.comparing ? (
-                  <Dynamic
-                    component={StockCard}
-                    symbol={stock}
-                    comparing
-                    fullWidth
-                  />
-                ) : (
-                  <Dynamic component={StockCard} symbol={stock} fullWidth />
-                );
+                if (props.comparing) {
+                  return (
+                    <Dynamic component={StockCard} symbol={stock} comparing />
+                  );
+                } else {
+                  return <Dynamic component={StockCard} symbol={stock} />;
+                }
               }}
             </For>
           </div>

@@ -65,7 +65,6 @@ const Compare = (props) => {
             ? [graphDataset(stock1()), graphDataset(stock2())]
             : [graphDataset(stock1())],
       },
-
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -95,7 +94,7 @@ const Compare = (props) => {
     };
   };
 
-  const graphDataset = (stockNum) => {
+  function graphDataset(stockNum) {
     return {
       data: Object.entries(stockNum?.Item?.price.slice(0, 11)).map(
         (entry) => Object.entries(entry[1])[0][1]
@@ -105,10 +104,10 @@ const Compare = (props) => {
       borderWidth: 2,
       tension: 0.4,
     };
-  };
+  }
 
   createEffect(() => {
-    if (!stock2.loading && stock2() && stock1()) {
+    if (stock2() && stock1()) {
       let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
       let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
       setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
@@ -125,8 +124,6 @@ const Compare = (props) => {
         myChart.destroy();
       });
     }
-    console.log(stock1()?.Item?.neg_vals);
-    console.log(stock1()?.Item?.pos_vals);
   });
 
   return (
@@ -227,14 +224,14 @@ const Compare = (props) => {
 
         {/* --- SearchDiv --- */}
         <div className={styles.searchDiv}>
-          <h3>Compare:</h3>
+          <h3 style="margin-bottom: 5rem;">Compare:</h3>
           <StockCard
             symbol={stock1()?.Item?.ticker}
             outlined
             grey
             fullWidth
             filledin
-            classList={{ skeleton: stock1.loading }}
+            classList={{ skeleton: stock1().loading }}
           />
           {stock2() && (
             <StockCard
@@ -249,8 +246,9 @@ const Compare = (props) => {
             comparing
             style={{
               position: "absolute",
-              top: "6.3rem",
+              top: "3.3rem",
               width: "calc(100% - 2rem)",
+              zIndex: "30",
             }}
           />
         </div>

@@ -12,7 +12,7 @@ const StockCard = (props) => {
 
   async function handleClick(e) {
     if (props.comparing) {
-      await calibrate2(props.symbol);
+      await calibrate2(props.symbol.toUpperCase());
     } else {
       await calibrate2(null);
       await calibrate1(props.symbol);
@@ -44,8 +44,8 @@ const StockCard = (props) => {
       {props.closable && (
         <span
           className={styles.closable}
-          onClick={() => {
-            calibrate2(null);
+          onClick={async () => {
+            await calibrate2(null);
           }}
         >
           x
