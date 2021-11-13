@@ -248,7 +248,7 @@ const Compare = (props) => {
               position: "absolute",
               top: "3.3rem",
               width: "calc(100% - 2rem)",
-              zIndex: "30",
+              zIndex: "60",
             }}
           />
         </div>

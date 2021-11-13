@@ -26,19 +26,11 @@ const App = () => {
     calibrate2,
     correlationFactor,
   } = state;
+
   onMount(async () => {
     if (!stock1() && localStorage.getItem("storedstock1")) {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
       // navigate("/compare", { replace: false });
-    }
-
-    if (
-      !localStorage.getItem("storedstock1") ||
-      !localStorage.getItem("storedstock1") === {}
-    ) {
-      navigate("/", { replace: true });
-    } else {
-      calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
   });
 

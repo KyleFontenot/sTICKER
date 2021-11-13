@@ -7,7 +7,7 @@ import state from "../StateProvider";
 
 const StockCard = (props) => {
   const navigate = useNavigate();
-  // Weird global conext solution "Withouit context" only in SolidJS
+  // Weird global context solution "Without context" only in SolidJS
   const { stock1, stock2, calibrate1, calibrate2 } = state;
 
   async function handleClick(e) {
