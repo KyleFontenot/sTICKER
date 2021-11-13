@@ -36,6 +36,9 @@ const Home = () => {
           className={styles.stockcard}
         />
       </Show>
+      <p>
+        Made by <a href="#">Eric Oulster</a>, <a href="#">Kyle Fontenot</a>
+      </p>
     </div>
   );
 };

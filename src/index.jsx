@@ -17,27 +17,31 @@ import "./index.css";
 const Compare = lazy(() => import("./pages/compare.jsx"));
 const Home = lazy(() => import("./pages/index.jsx"));
 
-// render(
-//   () => (
-//     <StateProvider>
-//       <Router>
-//         <Routes>
-//           <Route path="/" element={<Home />} />
-//           <Route path="/compare" element={<Compare />} />
-//         </Routes>
-//       </Router>
-//     </StateProvider>
-//   ),
-//   document.getElementById("root")
-// );
-render(
-  () => (
+const App = () => {
+  onMount(async () => {
+    if (!stock1() && localStorage.getItem("storedstock1")) {
+      calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
+      // navigate("/compare", { replace: false });
+    }
+
+    if (
+      !localStorage.getItem("storedstock1") ||
+      !localStorage.getItem("storedstock1") === {}
+    ) {
+      navigate("/", { replace: true });
+    } else {
+      calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
+    }
+    nn;
+  });
+
+  return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/compare" element={<Compare />} />
       </Routes>
     </Router>
-  ),
-  document.getElementById("root")
-);
+  );
+};
+render(App, document.getElementById("root"));
