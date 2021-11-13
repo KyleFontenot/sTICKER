@@ -18,6 +18,14 @@ const Compare = lazy(() => import("./pages/compare.jsx"));
 const Home = lazy(() => import("./pages/index.jsx"));
 
 const App = () => {
+  const {
+    stock1,
+    stock2,
+    symbInit1,
+    calibrate1,
+    calibrate2,
+    correlationFactor,
+  } = state;
   onMount(async () => {
     if (!stock1() && localStorage.getItem("storedstock1")) {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
@@ -32,7 +40,6 @@ const App = () => {
     } else {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
-    nn;
   });
 
   return (

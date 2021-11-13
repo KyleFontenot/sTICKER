@@ -19,28 +19,34 @@ const Home = () => {
 
   onMount(async () => {
     if (!stock1() && localStorage.getItem("storedstock1")) {
-      calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
+      await calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
       // navigate("/compare", { replace: false });
     }
   });
 
   return (
-    <div className={styles.gridwrapper}>
-      <MainLogo className={styles.mainlogo} />
-      <SearchBox description className={styles.searchBox} />
-      <Show when={stock1()}>
-        <StockCard
-          outlined
-          symbol={stock1()?.Item?.ticker}
-          style="margin-top: 1rem; max-width: 15rem;"
-          className={styles.stockcard}
-        />
-      </Show>
-      <p>
-        Made by <a href="#">Eric Oulster</a>, <a href="#">Kyle Fontenot</a>,{" "}
-        <a href="#">Emma Xie</a>, <a href="#">Pierre-Oliver Boisvert</a>
-      </p>
-    </div>
+    <>
+      <div className={styles.gridwrapper}>
+        <MainLogo className={styles.mainlogo} />
+        <SearchBox description className={styles.searchBox} />
+        <Show when={stock1()}>
+          <StockCard
+            outlined
+            symbol={stock1()?.Item?.ticker}
+            style="margin-top: 1rem; max-width: 15rem;"
+            className={styles.stockcard}
+          />
+        </Show>
+      </div>
+      <div className={styles.attribution}>
+        <p>
+          Made by: &nbsp; <a href="ericoulster.com">Eric Oulster</a>, &nbsp;
+          <a href="kylefontenot.com">Kyle Fontenot</a>,&nbsp;
+          <a href="#">Emma Xie</a>,&nbsp;&&nbsp;
+          <a href="#">Pierre-Oliver Boisvert</a>
+        </p>
+      </div>
+    </>
   );
 };
 
