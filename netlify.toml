@@ -5,8 +5,16 @@
 
 [[headers]]
   for = '/*'
-    [headers.values]
+  [headers.values]
     Access-Control-Allow-Origin = "*"
+
+
+[[redirects]]
+  from = "https://sticker-stocks.com"
+  to = "https://d33wubrfki0l68.cloudfront.net/js/639350edf91f1b0513276be496ca2dc4c89fbab4/assets/vendor.4df5f3f7.js"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify", Access-Control-Allow-Origin = "*"}
 
 # [[build]]
 #   command = "yarn build && cd functions/node-fetch && yarn"

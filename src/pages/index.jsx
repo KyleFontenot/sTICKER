@@ -37,7 +37,8 @@ const Home = () => {
         />
       </Show>
       <p>
-        Made by <a href="#">Eric Oulster</a>, <a href="#">Kyle Fontenot</a>
+        Made by <a href="#">Eric Oulster</a>, <a href="#">Kyle Fontenot</a>,{" "}
+        <a href="#">Emma Xie</a>, <a href="#">Pierre-Oliver Boisvert</a>
       </p>
     </div>
   );
