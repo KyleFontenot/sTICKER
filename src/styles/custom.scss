@@ -80,9 +80,9 @@ h4 {
   color: #eee;
   background: linear-gradient(327deg, #ddd, #f6f6f6, #ddd);
   background-size: 400% 400%;
-  -webkit-animation: skeletonanimation 1.5s ease infinite;
-  -moz-animation: skeletonanimation 1.5s ease infinite;
-  animation: skeletonanimation 1.5s ease infinite;
+  -webkit-animation: skeletonanimation 2s ease infinite;
+  -moz-animation: skeletonanimation 2s ease infinite;
+  animation: skeletonanimation 2s ease infinite;
   // transition: background-color 0.2s, color 0.2s;
 }
 @-webkit-keyframes skeletonanimation {

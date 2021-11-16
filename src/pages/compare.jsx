@@ -10,6 +10,13 @@ import Chart from "chart.js/auto";
 
 import SolidChart from "solid-chart.js";
 
+function differenceInWeekPrice(latestWeekPrice, previousWeekPrice) {
+  return (
+    ((previousWeekPrice - latestWeekPrice) / previousWeekPrice) *
+    100
+  ).toFixed(2);
+}
+
 const Compare = (props) => {
   const navigate = useNavigate();
   const [lastWeekPercentChange, setlastWeekPercentChange] = createSignal(0);
@@ -19,14 +26,7 @@ const Compare = (props) => {
   let chartref;
 
   // import rooted variables
-  const {
-    stock1,
-    stock2,
-    symbInit1,
-    calibrate1,
-    calibrate2,
-    correlationFactor,
-  } = state;
+  const { stock1, stock2, symbInit1, calibrate1, calibrate2 } = state;
 
   onMount(async () => {
     if (
@@ -38,13 +38,6 @@ const Compare = (props) => {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
     }
   });
-
-  function differenceInWeekPrice(latestWeekPrice, previousWeekPrice) {
-    return (
-      ((previousWeekPrice - latestWeekPrice) / previousWeekPrice) *
-      100
-    ).toFixed(2);
-  }
 
   const graphDataObject = (numofstocks) => {
     return {
@@ -212,7 +205,12 @@ const Compare = (props) => {
         </table>
 
         {/* --- GraphDiv --- */}
-        <div className={styles.graphDiv}>
+        <div
+          classList={{
+            [styles.graphDiv]: true,
+            [styles.skeleton]: stock1.loading || stock2.loading,
+          }}
+        >
           <canvas
             ref={chartref}
             classList={{

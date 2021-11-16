@@ -30,7 +30,6 @@ const App = () => {
   onMount(async () => {
     if (!stock1() && localStorage.getItem("storedstock1")) {
       calibrate1(JSON.parse(localStorage.getItem("storedstock1")));
-      // navigate("/compare", { replace: false });
     }
   });
 

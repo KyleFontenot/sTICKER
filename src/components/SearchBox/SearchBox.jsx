@@ -6,74 +6,66 @@ import {
   createResource,
   onMount,
   onCleanup,
+  createEffect,
 } from "solid-js";
 import { Dynamic } from "solid-js/web";
-// import LoadingIcon from "../LoadingIcon/LoadingIcon";
 import StockCard from "../StockCard/StockCard";
-// import { useGlobalState } from "../StateProvider";
 import SvgHelpTip from "../../images/helptip.svg";
 
-const listOfSymbols = [
-  "a",
-  "aap",
-  "abbv",
-  "adbe",
-  "ajg",
-  "akam",
-  "alb",
-  "alk",
-  "amcr",
-  "amp",
-  "aptv",
-  "ba",
-  "bio",
-  "br",
-  "carr",
-  "cb",
-  "ce",
-  "cinf",
-  "cl",
-  "cma",
-  "cme",
-  "cmi",
-  "cnc",
-  "coo",
-  "cost",
-  "crm",
-  "dd",
-  "dgx",
-  "duk",
-  "ebay",
-  "etr",
-  "evrg",
-  "exc",
-  "fang",
-  "fast",
-  "fox",
-  "frt",
-  "ftnt",
-  "gd",
-  "dux",
-];
-
-const APILINK = "https://c5fin9n590.execute-api.us-east-2.amazonaws.com/items";
+const LISTAPI = "https://ea2fun7j33.execute-api.us-east-2.amazonaws.com/list";
 
 const grabAvailableStocks = async () => {
-  let data = await fetch(APILINK).then((res) => res.json());
-  return data;
+  return await fetch(LISTAPI).then((res) => res.json());
 };
 
 const SearchBox = (props) => {
   const [availableStocks, setAvailableStocks] = createSignal([]);
+  const [masterStocks, setMasterStocks] = createSignal([]);
+
+  const [fetchmasterlistToggle, setFetchmasterlistToggle] = createSignal(false);
+
+  const [grabbedListObject, { mutate: manuallyList }] = createResource(
+    fetchmasterlistToggle,
+    grabAvailableStocks
+  );
+
+  createEffect(() => {
+    console.log(grabbedListObject());
+    // setMasterStocks(grabbedListObject().Items.map((each) => each.ticker));
+  });
+
+  onMount(async () => {
+    if (!localStorage.getItem("availableStocks")) {
+      setFetchmasterlistToggle(true);
+      let fetchedListOfStocks = await grabAvailableStocks();
+      localStorage.setItem(
+        "availableStocks",
+        JSON.stringify(fetchedListOfStocks)
+      );
+      let formattedList = fetchedListOfStocks.Items.map((each) => each.ticker);
+      setMasterStocks(formattedList);
+    } else {
+      let flatmapformat = JSON.parse(
+        localStorage.getItem("availableStocks")
+      ).Items.map((each) => each.ticker);
+      manuallyList(flatmapformat);
+      setMasterStocks(flatmapformat);
+    }
+  });
+  // createEffect(() => {
+  //   console.log(masterStocks());
+  // });
+
   let inputref;
   onCleanup(() => setAvailableStocks([]));
 
   async function handleInputChange(e) {
+    e.target.value = e.target.value.toUpperCase();
     if (!e.target.value) {
       setAvailableStocks([]);
     } else {
       setAvailableStocks(
-        listOfSymbols.filter((element) => element.includes(e.target.value))
+        masterStocks().filter((element) => element.includes(e.target.value))
       );
     }
   }
@@ -86,7 +78,12 @@ const SearchBox = (props) => {
         [styles.containerIfComparing]: props.comparing,
       }}
     >
-      <div className={styles.searchBox}>
+      <div
+        classList={{
+          [styles.searchBox]: true,
+          skeleton: grabbedListObject.loading,
+        }}
+      >
         <input
           type="text"
           maxLength="4"

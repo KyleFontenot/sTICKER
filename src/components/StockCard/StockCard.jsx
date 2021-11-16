@@ -12,10 +12,10 @@ const StockCard = (props) => {
 
   async function handleClick(e) {
     if (props.comparing) {
-      await calibrate2(props.symbol.toUpperCase());
+      await calibrate2(props.symbol);
     } else {
       // await calibrate2(null);
-      await calibrate1(props.symbol.toUpperCase());
+      await calibrate1(props.symbol);
       navigate("/compare", { replace: false });
     }
   }
