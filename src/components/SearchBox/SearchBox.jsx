@@ -69,7 +69,6 @@ const SearchBox = (props) => {
       );
     }
   }
-
   return (
     <div
       style={props.style}
@@ -82,13 +81,16 @@ const SearchBox = (props) => {
         classList={{
           [styles.searchBox]: true,
           skeleton: grabbedListObject.loading,
+          splash: !grabbedListObject.loading,
         }}
       >
         <input
           type="text"
           maxLength="4"
           ref={inputref}
-          placeholder="Search stock by symbol"
+          placeholder={
+            grabbedListObject.loading ? "Loading..." : `Search stock by symbol`
+          }
           className={styles.searchBoxInput}
           onInput={(e) => handleInputChange(e)}
           onFocusOut={() => {

@@ -12,7 +12,7 @@ import SolidChart from "solid-chart.js";
 
 function differenceInWeekPrice(latestWeekPrice, previousWeekPrice) {
   return (
-    ((previousWeekPrice - latestWeekPrice) / previousWeekPrice) *
+    ((latestWeekPrice - previousWeekPrice) / previousWeekPrice) *
     100
   ).toFixed(2);
 }
@@ -67,7 +67,9 @@ const Compare = (props) => {
           },
         },
         plugins: {
-          legend: false,
+          legend: {
+            display: true,
+          },
         },
         scales: {
           x: {
@@ -78,6 +80,11 @@ const Compare = (props) => {
           },
           y: {
             beginAtZero: false,
+            title: {
+              display: true,
+              color: "#aaa",
+              text: "Price",
+            },
             grid: {
               display: false,
             },
@@ -89,13 +96,14 @@ const Compare = (props) => {
 
   function graphDataset(stockNum) {
     return {
-      data: Object.entries(stockNum?.Item?.price.slice(0, 11)).map(
-        (entry) => Object.entries(entry[1])[0][1]
-      ),
+      data: Object.entries(stockNum?.Item?.price.slice(0, 11))
+        .map((entry) => Object.entries(entry[1])[0][1])
+        .reverse(),
       backgroundColor: stockNum === stock1() ? "#e8b023" : "#61b2df",
       borderColor: stockNum === stock1() ? "#e8b023" : "#61b2df",
       borderWidth: 2,
       tension: 0.4,
+      label: stockNum?.Item?.ticker,
     };
   }
 
@@ -105,6 +113,7 @@ const Compare = (props) => {
       let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
       setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
       let myChart = new Chart(chartref, graphDataObject(2));
+      myChart.update();
       onCleanup(() => {
         myChart.destroy();
       });
