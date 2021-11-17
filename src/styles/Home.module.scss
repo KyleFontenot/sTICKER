@@ -30,17 +30,23 @@
 .attribution {
   position: absolute;
   bottom: 3rem;
+  // right: 0;
   // left: calc(50% - 4rem);
   width: 100%;
   display: flex;
-  justify-content: center;
-  font-size: 0.95rem;
+  justify-content: flex-end;
+  padding-right: 1.5rem;
+  font-size: 0.85rem;
+  color: #aaa;
+  transition: color 0.2s, border-bottom 0.2s;
   a {
     // text-decoration: underline;
+    transition: color 0.2s, border-bottom 0.2s;
     padding-bottom: 4px;
-    border-bottom: 1px solid #999;
+    border-bottom: 1px solid #ddd;
     &:hover {
-      color: #444;
+      color: #666;
+      border-bottom: 1px solid #666;
     }
   }
 }

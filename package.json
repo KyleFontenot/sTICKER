@@ -22,6 +22,7 @@
     "sass": "^1.43.4",
     "solid-app-router": "^0.1.11",
     "solid-chart.js": "^1.0.7",
-    "solid-js": "^1.2.2"
+    "solid-js": "^1.2.2",
+    "statistics.js": "^1.0.0"
   }
 }

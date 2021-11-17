@@ -29,11 +29,6 @@ const SearchBox = (props) => {
     grabAvailableStocks
   );
 
-  createEffect(() => {
-    console.log(grabbedListObject());
-    // setMasterStocks(grabbedListObject().Items.map((each) => each.ticker));
-  });
-
   onMount(async () => {
     if (!localStorage.getItem("availableStocks")) {
       setFetchmasterlistToggle(true);

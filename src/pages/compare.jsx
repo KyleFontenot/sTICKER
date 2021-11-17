@@ -3,12 +3,26 @@ import MainLogo from "../components/MainLogo/MainLogo";
 import StockCard from "../components/StockCard/StockCard";
 import SearchBox from "../components/SearchBox/SearchBox";
 import state from "../components/StateProvider";
-import { onMount, createEffect, createSignal, onCleanup } from "solid-js";
+import {
+  onMount,
+  createEffect,
+  createSignal,
+  onCleanup,
+  createMemo,
+} from "solid-js";
 import { useNavigate } from "solid-app-router";
 import IconArrow from "../assets/arrow.svg";
 import Chart from "chart.js/auto";
 
 import SolidChart from "solid-chart.js";
+
+/*
+-Take only the rows for both stocks where the dates line up- for both stocks, no values can be empty.
+
+-Calculate the percentage movements of each stock (I think you are doing this already)
+
+-Take the percentage movements, and run them through a 'spearman' correlation.
+*/
 
 function differenceInWeekPrice(latestWeekPrice, previousWeekPrice) {
   return (
@@ -26,7 +40,15 @@ const Compare = (props) => {
   let chartref;
 
   // import rooted variables
-  const { stock1, stock2, symbInit1, calibrate1, calibrate2 } = state;
+  const {
+    stock1,
+    stock2,
+    mutate1,
+    mutate2,
+    calibrate1,
+    calibrate2,
+    correlationMemo,
+  } = state;
 
   onMount(async () => {
     if (
@@ -44,13 +66,10 @@ const Compare = (props) => {
       type: "line",
       data: {
         // X axis labels on bottom
-        labels: Object.entries(stock1()?.Item?.price.slice(0, 11))
+        labels: stock1()
+          ?.Item?.price.slice(0, 11)
           .map((entry) =>
-            Object.entries(entry[1])[0][0]
-              .replace("-", "/")
-              .split("")
-              .slice(5, 14)
-              .join("")
+            entry["date"].replace("-", "/").split("").slice(5, 14).join("")
           )
           .reverse(),
         datasets:
@@ -96,8 +115,9 @@ const Compare = (props) => {
 
   function graphDataset(stockNum) {
     return {
-      data: Object.entries(stockNum?.Item?.price.slice(0, 11))
-        .map((entry) => Object.entries(entry[1])[0][1])
+      data: stockNum?.Item?.price
+        .slice(0, 11)
+        .map((entry) => entry["price"])
         .reverse(),
       backgroundColor: stockNum === stock1() ? "#e8b023" : "#61b2df",
       borderColor: stockNum === stock1() ? "#e8b023" : "#61b2df",
@@ -109,8 +129,8 @@ const Compare = (props) => {
 
   createEffect(() => {
     if (stock2() && stock1()) {
-      let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
-      let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
+      let previousWeek = stock1()?.Item?.price[1]["price"];
+      let latestWeek = stock1()?.Item?.price[0]["price"];
       setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
       let myChart = new Chart(chartref, graphDataObject(2));
       myChart.update();
@@ -118,8 +138,8 @@ const Compare = (props) => {
         myChart.destroy();
       });
     } else if (stock1()) {
-      let previousWeek = Object.entries(stock1()?.Item?.price[1])[0][1];
-      let latestWeek = Object.entries(stock1()?.Item?.price[0])[0][1];
+      let previousWeek = stock1()?.Item?.price[1]["price"];
+      let latestWeek = stock1()?.Item?.price[0]["price"];
       setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
       let myChart = new Chart(chartref, graphDataObject(1));
       onCleanup(() => {
@@ -145,6 +165,9 @@ const Compare = (props) => {
               classList={{ [styles.skeleton]: stock1.loading }}
               style="display: inline-block;margin-left:0.8rem;letter-spacing:1px;"
             >
+              <button onClick={() => console.log(correlationMemo())}>
+                Correlation factor
+              </button>
               {!stock1.loading ? "S&P500" : ""}
             </p>
             <br />
@@ -160,9 +183,9 @@ const Compare = (props) => {
               {/* Latest price */}
               <p>
                 as of &nbsp;
-                {stock1() && Object.entries(stock1()?.Item?.price[0])[0][0]}
+                {stock1() && stock1()?.Item?.price[0]["date"]}
               </p>
-              <h3>{`$${Object.entries(stock1()?.Item?.price[0])[0][1]}
+              <h3>{`$${stock1()?.Item?.price[0]["price"]}
               `}</h3>
               <br />
               <p>Since previous week</p>
