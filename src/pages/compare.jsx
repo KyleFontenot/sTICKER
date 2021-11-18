@@ -34,8 +34,6 @@ function differenceInWeekPrice(latestWeekPrice, previousWeekPrice) {
 const Compare = (props) => {
   const navigate = useNavigate();
   const [lastWeekPercentChange, setlastWeekPercentChange] = createSignal(0);
-  // const lastWeekPercentChange = createMemo(() => )
-  // const [lastWeekPercentChange, setlastWeekPercentChange] = createSignal(null);
 
   let chartref;
 

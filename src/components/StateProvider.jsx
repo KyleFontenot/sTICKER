@@ -34,32 +34,57 @@ function StateProvider(props) {
 -Calculate the percentage movements of each stock (I think you are doing this already)
 
 -Take the percentage movements, and run them through a 'spearman' correlation.
-
 */
-  // onMount(() => {
-  //   console.log();
-  // });
-  const correlationFactor = (firstStock, secondStock) => {
-    console.log();
+
+  const correlationFactor = createMemo(() =>
+    computeCorrelation(stock1(), stock2())
+  );
+
+  function computeCorrelation(firstStock, secondStock) {
+    // let firstColumn, secondColumn;
     let firstColumn = {
-      length: firstStock?.Item?.price.length,
       array: firstStock?.Item?.price,
-      percentChanges: firstStock?.Item?.price.map((entry, index, array) =>
-        ((entry["price"] - array[index + 1]["price"]) * 100).toFixed(2)
-      ),
+      prices: firstStock?.Item?.price.map((entry) => entry["price"]),
     };
     let secondColumn = {
-      length: secondStock?.Item?.price.length,
       array: secondStock?.Item?.price,
+      prices: firstStock?.Item?.price.map((entry) => entry["price"]),
     };
 
     // check for length of array
+    let percentageChanges1 = [];
+    for (let i = 0; i < firstStock?.Item?.price.length; i++) {
+      percentageChanges1.push(
+        (firstColumn.prices[i] - firstColumn.prices[i + 1]) /
+          firstColumn.prices[i + 1]
+      );
+    }
 
-    //
+    let percentageChanges2 = [];
+    for (let i = 0; i < secondStock?.Item?.price.length; i++) {
+      percentageChanges2.push(
+        (secondColumn.prices[i] - secondColumn.prices[i + 1]) /
+          secondColumn.prices[i + 1]
+      );
+    }
 
-    console.log(firstStock?.Item?.price[0]["price"]);
-    return firstColumn.percentChanges;
-  };
+    // spearmansRho
+
+    // let stats = new Statistics(bodyMeasurements, )
+
+    return percentageChanges1;
+  }
+
+  createEffect(() => console.log(correlationFactor()));
+
+  function percentageChanges() {
+    let allpercentageChanges = [];
+    let precentageChanges1 = [];
+
+    return firstStock?.Item?.price.map((entry, index, array) =>
+      ((array[index]["price"] - array[index + 1]["price"]) * 100).toFixed(2)
+    );
+  }
 
   const correlationMemo = createMemo(() =>
     correlationFactor(stock1(), stock2())

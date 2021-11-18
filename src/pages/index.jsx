@@ -41,9 +41,7 @@ const Home = () => {
       <div className={styles.attribution}>
         <p>
           Made by: &nbsp; <a href="ericoulster.com">Eric Oulster</a>, &nbsp;
-          <a href="kylefontenot.com">Kyle Fontenot</a>,&nbsp;
-          <a href="#">Emma Xie</a>,&nbsp;&&nbsp;
-          <a href="#">Pierre-Oliver Boisvert</a>
+          <a href="kylefontenot.com">Kyle Fontenot</a>,
         </p>
       </div>
     </>
