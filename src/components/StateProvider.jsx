@@ -41,38 +41,50 @@ function StateProvider(props) {
   );
 
   function computeCorrelation(firstStock, secondStock) {
-    // let firstColumn, secondColumn;
-    let firstColumn = {
-      array: firstStock?.Item?.price,
-      prices: firstStock?.Item?.price.map((entry) => entry["price"]),
-    };
-    let secondColumn = {
-      array: secondStock?.Item?.price,
-      prices: firstStock?.Item?.price.map((entry) => entry["price"]),
-    };
+    if (firstStock && secondStock) {
+      let firstColumn = {
+        array: firstStock?.Item?.price,
+        prices: firstStock?.Item?.price.map((entry) => entry["price"]),
+      };
+      let secondColumn = {
+        array: secondStock?.Item?.price,
+        prices: secondStock?.Item?.price.map((entry) => entry["price"]),
+      };
 
-    // check for length of array
-    let percentageChanges1 = [];
-    for (let i = 0; i < firstStock?.Item?.price.length; i++) {
-      percentageChanges1.push(
-        (firstColumn.prices[i] - firstColumn.prices[i + 1]) /
-          firstColumn.prices[i + 1]
+      // check for length of array
+
+      // Arrays made of percentage changes
+      let percentageChanges = [];
+      for (let i = 0; i < firstStock?.Item?.price.length; i++) {
+        percentageChanges.push({
+          firstStockChanges: (
+            ((firstColumn.prices[i] - firstColumn.prices[i + 1]) /
+              firstColumn.prices[i + 1]) *
+            100
+          ).toFixed(6),
+          secondStockChanges: (
+            ((secondColumn.prices[i] - secondColumn.prices[i + 1]) /
+              secondColumn.prices[i + 1]) *
+            100
+          ).toFixed(6),
+        });
+      }
+
+      // spearmansRho
+      var testVars = {
+        firstStockChanges: "metric",
+        secondStockChanges: "metric",
+      };
+      var stats = new Statistics(percentageChanges, testVars);
+      var dependence = stats.spearmansRho(
+        "firstStockChanges",
+        "secondStockChanges"
       );
+
+      return dependence.rho.toFixed(4);
     }
-
-    let percentageChanges2 = [];
-    for (let i = 0; i < secondStock?.Item?.price.length; i++) {
-      percentageChanges2.push(
-        (secondColumn.prices[i] - secondColumn.prices[i + 1]) /
-          secondColumn.prices[i + 1]
-      );
-    }
-
-    // spearmansRho
-
-    // let stats = new Statistics(bodyMeasurements, )
-
-    return percentageChanges1;
+    return;
+    onCleanup(() => (stats = null));
   }
 
   createEffect(() => console.log(correlationFactor()));

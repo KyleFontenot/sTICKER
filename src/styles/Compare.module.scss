@@ -69,10 +69,13 @@
   & h3 {
     display: inline-block;
   }
-  & > p {
+  & div p {
     margin-right: 0.75rem;
     font-size: 0.8rem;
     color: #999;
+  }
+  & > div {
+    display: inline-block;
   }
 }
 .mainStats {
@@ -171,6 +174,22 @@
   }
 }
 
+.firstStockPrice,
+.secondStockPrice {
+  outline-width: 1px;
+  outline-style: solid;
+  border-radius: 10px;
+  padding: 15px;
+}
+.firstStockPrice {
+  outline-color: var(--color-primary-3);
+  background-color: var(--color-primary-1);
+}
+.secondStockPrice {
+  outline-color: var(--color-secondary-3);
+  background-color: var(--color-secondary-1);
+}
+
 @media (min-width: 868px) {
   .wrapper {
     grid-template-columns: repeat(12, 1fr);
@@ -179,10 +198,10 @@
   .mainInfo {
     flex-direction: row;
     & div:nth-of-type(1) {
-      flex: 1 1 62%;
+      flex: 1 1 58%;
     }
     & div:nth-of-type(2) {
-      flex: 1 1 32%;
+      flex: 1 1 42%;
     }
   }
   .priceDiv {

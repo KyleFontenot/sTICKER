@@ -33,7 +33,8 @@ function differenceInWeekPrice(latestWeekPrice, previousWeekPrice) {
 
 const Compare = (props) => {
   const navigate = useNavigate();
-  const [lastWeekPercentChange, setlastWeekPercentChange] = createSignal(0);
+  const [lastWeekPercentChange1, setlastWeekPercentChange1] = createSignal(0);
+  const [lastWeekPercentChange2, setlastWeekPercentChange2] = createSignal(0);
 
   let chartref;
 
@@ -127,9 +128,16 @@ const Compare = (props) => {
 
   createEffect(() => {
     if (stock2() && stock1()) {
-      let previousWeek = stock1()?.Item?.price[1]["price"];
-      let latestWeek = stock1()?.Item?.price[0]["price"];
-      setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
+      let previousWeek1 = stock1()?.Item?.price[1]["price"];
+      let latestWeek1 = stock1()?.Item?.price[0]["price"];
+      setlastWeekPercentChange1(
+        differenceInWeekPrice(latestWeek1, previousWeek1)
+      );
+      let previousWeek2 = stock2()?.Item?.price[1]["price"];
+      let latestWeek2 = stock2()?.Item?.price[0]["price"];
+      setlastWeekPercentChange2(
+        differenceInWeekPrice(latestWeek2, previousWeek2)
+      );
       let myChart = new Chart(chartref, graphDataObject(2));
       myChart.update();
       onCleanup(() => {
@@ -138,7 +146,9 @@ const Compare = (props) => {
     } else if (stock1()) {
       let previousWeek = stock1()?.Item?.price[1]["price"];
       let latestWeek = stock1()?.Item?.price[0]["price"];
-      setlastWeekPercentChange(differenceInWeekPrice(latestWeek, previousWeek));
+      setlastWeekPercentChange1(
+        differenceInWeekPrice(latestWeek, previousWeek)
+      );
       let myChart = new Chart(chartref, graphDataObject(1));
       onCleanup(() => {
         myChart.destroy();
@@ -163,9 +173,6 @@ const Compare = (props) => {
               classList={{ [styles.skeleton]: stock1.loading }}
               style="display: inline-block;margin-left:0.8rem;letter-spacing:1px;"
             >
-              <button onClick={() => console.log(correlationMemo())}>
-                Correlation factor
-              </button>
               {!stock1.loading ? "S&P500" : ""}
             </p>
             <br />
@@ -177,40 +184,89 @@ const Compare = (props) => {
           </div>
 
           <div className={styles.priceDiv}>
-            <Show when={stock1()}>
-              {/* Latest price */}
-              <p>
+            <div style="text-align:center;align-self:left;line-display:block;line-height: 2.5rem">
+              <p style="text-align:left;">
                 as of &nbsp;
                 {stock1() && stock1()?.Item?.price[0]["date"]}
               </p>
-              <h3>{`$${stock1()?.Item?.price[0]["price"]}
-              `}</h3>
               <br />
               <p>Since previous week</p>
-              <h3
-                style={{
-                  color: lastWeekPercentChange() > 0 ? "#6cd83c" : "#F44336",
-                }}
-              >
-                <IconArrow
-                  style={{
-                    transform: `rotate(${
-                      lastWeekPercentChange() > 0
-                        ? -45
-                        : lastWeekPercentChange() === 0
-                        ? 0
-                        : 45
-                    }deg)`,
-                    lineHeight: "1rem",
-                    top: "5px",
-                    position: "relative",
-                    transition: "none!important",
-                  }}
-                />
+            </div>
+            <div>
+              <Show when={stock1()}>
+                {/* Latest price */}
 
-                {`%${lastWeekPercentChange()}`}
-              </h3>
-            </Show>
+                <div className={styles.firstStockPrice}>
+                  <h3>{`$${stock1()?.Item?.price[0]["price"]}
+              `}</h3>
+                  <br />
+
+                  <h3
+                    style={{
+                      color:
+                        lastWeekPercentChange1() > 0 ? "#6cd83c" : "#F44336",
+                    }}
+                  >
+                    <IconArrow
+                      style={{
+                        transform: `rotate(${
+                          lastWeekPercentChange1() > 0
+                            ? -45
+                            : lastWeekPercentChange1() === 0
+                            ? 0
+                            : 45
+                        }deg)`,
+                        lineHeight: "1rem",
+                        top: "5px",
+                        position: "relative",
+                        transition: "none!important",
+                      }}
+                    />
+
+                    {`%${lastWeekPercentChange1()}`}
+                  </h3>
+                </div>
+              </Show>
+            </div>
+
+            <div>
+              <Show when={stock2()}>
+                {/* Latest price */}
+
+                <div
+                  style="margin-left: 1.25rem"
+                  className={styles.secondStockPrice}
+                >
+                  <h3>{`$${stock2()?.Item?.price[0]["price"]}
+              `}</h3>
+                  <br />
+                  <h3
+                    style={{
+                      color:
+                        lastWeekPercentChange2() > 0 ? "#6cd83c" : "#F44336",
+                    }}
+                  >
+                    <IconArrow
+                      style={{
+                        transform: `rotate(${
+                          lastWeekPercentChange2() > 0
+                            ? -45
+                            : lastWeekPercentChange2() === 0
+                            ? 0
+                            : 45
+                        }deg)`,
+                        lineHeight: "1rem",
+                        top: "5px",
+                        position: "relative",
+                        transition: "none!important",
+                      }}
+                    />
+
+                    {`%${lastWeekPercentChange2()}`}
+                  </h3>
+                </div>
+              </Show>
+            </div>
           </div>
         </div>
 
@@ -252,7 +308,7 @@ const Compare = (props) => {
 
         {/* --- SearchDiv --- */}
         <div className={styles.searchDiv}>
-          <h3 style="margin-bottom: 5rem;">Compare:</h3>
+          <h3 style="margin-bottom: 5.1rem;">Compare:</h3>
           <StockCard
             symbol={stock1()?.Item?.ticker}
             outlined
@@ -279,6 +335,15 @@ const Compare = (props) => {
               zIndex: "60",
             }}
           />
+          {stock1() && stock2() ? (
+            <div style="text-align: center;">
+              <h4 style="margin-top: 1.5rem">Correlation Factor:</h4>
+              <p
+                style={`color: ${correlationMemo() > 0 ? "#6cd83c" : "#F44336"};
+                  font-size: 2.5rem;`}
+              >{`% ${correlationMemo()}`}</p>
+            </div>
+          ) : null}
         </div>
 
         {/* --- CorrelationsDiv --- */}
