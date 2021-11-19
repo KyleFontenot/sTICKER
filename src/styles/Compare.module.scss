@@ -140,15 +140,6 @@
   box-shadow: 0 0 25px #88888828 inset;
   border-radius: 4px;
   animation: 3s skeletonanimation 3s infinite alternate ease;
-  // & > div {
-  //   // top: 13%;
-  //   width: calc(100% - 2rem);
-  //   display: flex;
-  //   justify-content: center;
-  //   margin-top: 1rem;
-  //   // left: calc(50% - 9rem);
-  //   position: absolute;
-  // }
 }
 
 .correlationsDiv {
@@ -198,10 +189,10 @@
   .mainInfo {
     flex-direction: row;
     & div:nth-of-type(1) {
-      flex: 1 1 58%;
+      flex: 1 1 50%;
     }
     & div:nth-of-type(2) {
-      flex: 1 1 42%;
+      flex: 1 1 50%;
     }
   }
   .priceDiv {
@@ -219,15 +210,3 @@
     grid-row: 2 / 3;
   }
 }
-
-// extra wide screens
-// @media (min-width: 1268px) {
-//
-//   .mainStats {
-//     grid-column: 2 / -1;
-//     grid-row: 2 / 3;
-//   }
-//   .correlationsDiv {
-//     // grid-column: span 3;
-//   }
-// }

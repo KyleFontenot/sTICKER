@@ -6,18 +6,6 @@ export default defineConfig({
   plugins: [solidPlugin(), solidSvg()],
   build: {
     target: "esnext",
-    polyfillDynamicImport: false,
-    publicDir: "built",
-    clearScreen: false,
-    base: "/",
+    clearScreen: true,
   },
 });
-// module.exports = {
-//   plugins: [solidPlugin(), solidSvg()],
-//   build: {
-//     target: "esnext",
-//     polyfillDynamicImport: false,
-//     publicDir: "built",
-//     clearScreen: false,
-//   },
-// };
