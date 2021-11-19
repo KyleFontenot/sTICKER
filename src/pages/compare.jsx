@@ -341,7 +341,12 @@ const Compare = (props) => {
               <p
                 style={`color: ${correlationMemo() > 0 ? "#6cd83c" : "#F44336"};
                   font-size: 2.5rem;`}
-              >{`% ${correlationMemo()}`}</p>
+              >
+                {correlationMemo()}
+                <span style="font-size: 0.8rem; color: #999; margin-left:0.3rem">
+                  /100
+                </span>
+              </p>
             </div>
           ) : null}
         </div>

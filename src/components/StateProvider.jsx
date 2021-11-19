@@ -81,7 +81,7 @@ function StateProvider(props) {
         "secondStockChanges"
       );
 
-      return dependence.rho.toFixed(4);
+      return (dependence.rho * 100).toFixed(2);
     }
     return;
     onCleanup(() => (stats = null));
