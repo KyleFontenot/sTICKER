@@ -14,9 +14,8 @@ const StockCard = (props) => {
     if (props.comparing) {
       await calibrate2(props.symbol);
     } else {
-      // await calibrate2(null);
-      navigate("/compare", { replace: false });
       await calibrate1(props.symbol);
+      navigate("/compare", { replace: false });
     }
   }
 
@@ -35,11 +34,14 @@ const StockCard = (props) => {
         }}
       >
         <div
-          classList={{ [styles.comparingBadge]: props.comparing, badge: true }}
+          classList={{
+            [styles.comparingBadge]: props.comparing,
+            [styles.badge]: true,
+          }}
         >
           {props.symbol}
         </div>
-        <p style={{ display: "inline-block" }}>{props.symbol}</p>
+        <p className={styles.name}>{props.name ? props.name : props.symbol}</p>
       </button>
       {props.closable && (
         <span

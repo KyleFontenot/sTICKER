@@ -10,6 +10,7 @@ import {
   onCleanup,
   createMemo,
 } from "solid-js";
+import { Dynamic } from "solid-js/web";
 import { useNavigate } from "solid-app-router";
 import IconArrow from "../assets/arrow.svg";
 import Chart from "chart.js/auto";
@@ -311,6 +312,7 @@ const Compare = (props) => {
           <h3 style="margin-bottom: 5.1rem;">Compare:</h3>
           <StockCard
             symbol={stock1()?.Item?.ticker}
+            name={stock1()?.Item?.name}
             outlined
             grey
             fullWidth
@@ -320,6 +322,7 @@ const Compare = (props) => {
           {stock2() && (
             <StockCard
               symbol={stock2()?.Item?.ticker}
+              name={stock2()?.Item?.name}
               outlined
               filledin
               comparing
@@ -372,8 +375,15 @@ const Compare = (props) => {
             <div>
               <h4>Highest Positive Correlations</h4>
               <For each={stock1()?.Item?.pos_vals.slice(0, 3)}>
-                {(each, i) => (
-                  <StockCard symbol={each.name} outlined comparing pivot />
+                {(each) => (
+                  <Dynamic
+                    component={StockCard}
+                    symbol={each.name}
+                    name={each.name}
+                    outlined
+                    pivot
+                    comparing
+                  />
                 )}
               </For>
             </div>
@@ -383,8 +393,14 @@ const Compare = (props) => {
             <div>
               <h4>Most Negative Correlations</h4>
               <For each={stock1()?.Item?.neg_vals.slice(0, 3)}>
-                {(each, i) => (
-                  <StockCard symbol={each.name} outlined comparing pivot />
+                {(each) => (
+                  <StockCard
+                    symbol={each.name}
+                    name={each.name}
+                    outlined
+                    pivot
+                    comparing
+                  />
                 )}
               </For>
             </div>
@@ -395,7 +411,13 @@ const Compare = (props) => {
               <h4>Most Unrelated Correlations</h4>
               <For each={stock1()?.Item?.dec_vals.slice(0, 3)}>
                 {(each, i) => (
-                  <StockCard symbol={each?.name} outlined pivot comparing />
+                  <StockCard
+                    symbol={each.name}
+                    name={each.name}
+                    outlined
+                    pivot
+                    comparing
+                  />
                 )}
               </For>
             </div>

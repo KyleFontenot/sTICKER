@@ -37,19 +37,21 @@ const SearchBox = (props) => {
         "availableStocks",
         JSON.stringify(fetchedListOfStocks)
       );
-      let formattedList = fetchedListOfStocks.Items.map((each) => each.ticker);
-      setMasterStocks(formattedList);
+      setMasterStocks(
+        fetchedListOfStocks.Items.map((each) => {
+          return { ticker: each.ticker, name: each.name };
+        })
+      );
     } else {
       let flatmapformat = JSON.parse(
         localStorage.getItem("availableStocks")
-      ).Items.map((each) => each.ticker);
+      ).Items.map((each) => {
+        return { ticker: each.ticker, name: each.name };
+      });
       manuallyList(flatmapformat);
       setMasterStocks(flatmapformat);
     }
   });
-  // createEffect(() => {
-  //   console.log(masterStocks());
-  // });
 
   let inputref;
   onCleanup(() => setAvailableStocks([]));
@@ -59,11 +61,14 @@ const SearchBox = (props) => {
     if (!e.target.value) {
       setAvailableStocks([]);
     } else {
-      setAvailableStocks(
-        masterStocks().filter((element) => element.includes(e.target.value))
+      await setAvailableStocks(
+        masterStocks().filter((element) =>
+          element?.ticker?.includes(e.target.value)
+        )
       );
     }
   }
+
   return (
     <div
       style={props.style}
@@ -103,10 +108,21 @@ const SearchBox = (props) => {
               {(stock) => {
                 if (props.comparing) {
                   return (
-                    <Dynamic component={StockCard} symbol={stock} comparing />
+                    <Dynamic
+                      component={StockCard}
+                      symbol={stock.ticker}
+                      name={stock.name}
+                      comparing
+                    />
                   );
                 } else {
-                  return <Dynamic component={StockCard} symbol={stock} />;
+                  return (
+                    <Dynamic
+                      component={StockCard}
+                      symbol={stock.ticker}
+                      name={stock.name}
+                    />
+                  );
                 }
               }}
             </For>

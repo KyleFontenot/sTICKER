@@ -30,7 +30,21 @@
   border-radius: 9px;
   margin-bottom: 0.5rem;
 }
-
+.name {
+  display: inline;
+  // &::after {
+  //   content: "";
+  //   position: absolute;
+  //   right: 0;
+  //   top: 0;
+  //   height: 100%;
+  //   outline: 1px solid purple;
+  //   width: 2.5rem;
+  //   border-top-right-radius: 9px;
+  //   border-bottom-right-radius: 9px;
+  //   background: linear-gradient(to right, white, blue);
+  // }
+}
 .badge {
   background-color: var(--color-primary);
   color: white;
@@ -41,7 +55,7 @@
   width: 4rem;
   text-align: center;
   font-size: 0.8rem;
-  font-weight: bolder;
+  font-weight: 500;
 }
 .comparingBadge {
   background-color: var(--color-secondary-2) !important;

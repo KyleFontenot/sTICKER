@@ -87,8 +87,6 @@ function StateProvider(props) {
     onCleanup(() => (stats = null));
   }
 
-  createEffect(() => console.log(correlationFactor()));
-
   function percentageChanges() {
     let allpercentageChanges = [];
     let precentageChanges1 = [];

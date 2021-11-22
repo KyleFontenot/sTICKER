@@ -33,15 +33,26 @@ const Home = () => {
           <StockCard
             outlined
             symbol={stock1()?.Item?.ticker}
-            style="margin-top: 1rem; max-width: 15rem;"
+            name={stock1()?.Item?.name}
+            style="margin-top: 1rem; max-width: 20rem;"
             className={styles.stockcard}
           />
         </Show>
       </div>
       <div className={styles.attribution}>
         <p>
-          Made by: &nbsp; <a href="ericoulster.com">Eric Oulster</a>, &nbsp;
-          <a href="kylefontenot.com">Kyle Fontenot</a>,
+          Made by: &nbsp;
+          <a
+            href="https://ericoulster.github.io/Personal-Site/"
+            target="__blank"
+            rel="noopener"
+          >
+            Eric Oulster
+          </a>
+          , &nbsp;
+          <a href="https://kylefontenot.com" target="__blank" rel="noopener">
+            Kyle Fontenot
+          </a>
         </p>
       </div>
     </>
