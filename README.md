@@ -4,7 +4,7 @@
   </p>
 </a>
   
-<h1 >sTICKER</h1>
+<h1>sTICKER</h1>
 
 
 
@@ -15,7 +15,10 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/41701c8a-4a1d-4c3d-bdc7-d99d9173ec2f/deploy-status)](https://app.netlify.com/sites/musing-lichterman-f2aa12/deploys)
 
+https://sticker-stocks.com/
+
 # Overview
+
 sTICKER serves correlation data on comparison stock options. 
 
  
