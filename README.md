@@ -19,7 +19,7 @@
 sTICKER serves correlation data on comparison stock options. 
 
  
-# Under The Hood
+## Under The Hood
 Created with SolidJS in a single-page-application architecture, it serves dynamic data from a serverless AWS backend. Client-side, stocks are asynchronously loaded into localStorage to display a variety of data points through the comparison page. Back-end is interacted with AWS's API Gateway, which initiates Lambda Functions that pull from DynamoDB. 
 
 ## Created with <a href="https://www.propelprojects.org/" target="__blank" rel="noopener">Propel Projects</a>
