@@ -73,15 +73,13 @@ const Compare = (props) => {
 		if (stock2()) {
 			let dateQuantityDifference = stock1Length - stock2Length;
 			if (
-				dateQuantityDifference < 0 &&
-				(dateQuantityDifference > chartThreshold ||
-					dateQuantityDifference * -1 < chartThreshold * -1)
+				dateQuantityDifference <= 0 &&
+				dateQuantityDifference >= chartThreshold
 			) {
 				LCD = stock1Length * -1;
 			} else if (
 				dateQuantityDifference > 0 &&
-				(dateQuantityDifference > chartThreshold ||
-					dateQuantityDifference * -1 < chartThreshold * -1)
+				dateQuantityDifference <= chartThreshold * -1
 			) {
 				LCD = stock2Length * -1;
 			}
