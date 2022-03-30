@@ -10,11 +10,16 @@
   border: none;
   outline: none;
   text-align: left;
+  line-height: 2rem;
   // box-shadow: 0 0 8px #333333a8;
   color: #777;
   border-top: 1px solid #eeeeeea8;
+  transition: background-color 0.3s;
   &:hover {
     background-color: #f9f9f9;
+  }
+  &:focus-visible {
+    outline: 2px dashed #333;
   }
   &:last-child {
     border-bottom-left-radius: 10px;
@@ -32,18 +37,6 @@
 }
 .name {
   display: inline;
-  // &::after {
-  //   content: "";
-  //   position: absolute;
-  //   right: 0;
-  //   top: 0;
-  //   height: 100%;
-  //   outline: 1px solid purple;
-  //   width: 2.5rem;
-  //   border-top-right-radius: 9px;
-  //   border-bottom-right-radius: 9px;
-  //   background: linear-gradient(to right, white, blue);
-  // }
 }
 .badge {
   background-color: var(--color-primary);
@@ -56,6 +49,7 @@
   text-align: center;
   font-size: 0.8rem;
   font-weight: 500;
+  line-height: 1rem;
 }
 .comparingBadge {
   background-color: var(--color-secondary-2) !important;

@@ -20,7 +20,7 @@ const StockCard = (props) => {
   }
 
   return (
-    <div className={styles.container} style={props.style}>
+    <div className={styles.container} style={props.style} aria-label={`Analyze ${props.name}`}>
       <button
         classList={{
           [styles.card]: true,

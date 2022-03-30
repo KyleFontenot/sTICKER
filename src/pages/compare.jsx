@@ -51,9 +51,6 @@ const Compare = (props) => {
 	} = state;
 
 	onMount(async () => {
-		// the -11 would be the common denominator for the stocks.
-		console.log(stock1()?.Item?.price.slice(-11, stock1()?.Item?.price.length));
-
 		if (
 			!localStorage.getItem("storedstock1") ||
 			!localStorage.getItem("storedstock1") === {}
@@ -84,7 +81,6 @@ const Compare = (props) => {
 				LCD = stock2Length * -1;
 			}
 		}
-		console.log(LCD);
 		return {
 			type: "line",
 			data: {

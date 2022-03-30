@@ -11,52 +11,55 @@ import {
 import { Dynamic } from "solid-js/web";
 import StockCard from "../StockCard/StockCard";
 import SvgHelpTip from "../../images/helptip.svg";
-import entryIndex from "../../entry-index.json";
+import {stocks} from "../../entry-index.json";
 
 const LISTAPI = "https://ea2fun7j33.execute-api.us-east-2.amazonaws.com/list";
 
-const grabAvailableStocks = async () => {
-	// return await fetch(LISTAPI).then((res) => res.json());
-	return entryIndex;
-};
 
 const SearchBox = (props) => {
+	// const grabAvailableStocks = () => {
+	// 	// return await fetch(LISTAPI).then((res) => res.json());
+	// 	console.log(entryIndex.stocks);
+	// 	return entryIndex.stocks;
+	// };
+
 	const [availableStocks, setAvailableStocks] = createSignal([]);
-	const [masterStocks, setMasterStocks] = createSignal([]);
+	const [masterStocks, setMasterStocks] = createSignal(stocks);
 
 	const [fetchmasterlistToggle, setFetchmasterlistToggle] = createSignal(false);
 
-	const [grabbedListObject, { mutate: manuallyList }] = createResource(
-		fetchmasterlistToggle,
-		grabAvailableStocks
-	);
+	// const [grabbedListObject, { mutate: manuallyList }] = createResource(
+	// 	fetchmasterlistToggle,
+	// 	grabAvailableStocks
+	// );
 
-	onMount(async () => {
-		if (!localStorage.getItem("availableStocks")) {
-			setFetchmasterlistToggle(true);
-			let fetchedListOfStocks = await grabAvailableStocks();
-			// localStorage.setItem(
-			// 	"availableStocks",
-			// 	JSON.stringify(fetchedListOfStocks)
-			// );
-			localStorage.setItem("availableStocks", fetchedListOfStocks);
-			setMasterStocks(
-				fetchedListOfStocks.map((each) => {
-					return { ticker: each.ticker, name: each.name };
-				})
-			);
-		} else {
-			console.log(JSON.parse(localStorage.getItem("availableStocks")));
-			let flatmapformat = JSON.parse(
-				localStorage.getItem("availableStocks")
-			).map((each) => {
-				return { ticker: each.ticker, name: each.name };
-			});
-			// console.log(flatmapformat);
-			manuallyList(flatmapformat);
-			setMasterStocks(flatmapformat);
-		}
-	});
+	// onMount(async () => {
+	// 	// await grabAvailableStocks();
+	// 	if (!localStorage.getItem("availableStocks")) {
+	// 		setFetchmasterlistToggle(true);
+	// 		let fetchedListOfStocks = await grabAvailableStocks();
+	// 		// localStorage.setItem(
+	// 		// 	"availableStocks",
+	// 		// 	JSON.stringify(fetchedListOfStocks)
+	// 		// );
+	// 		localStorage.setItem("availableStocks", fetchedListOfStocks);
+	// 		setMasterStocks(
+	// 			fetchedListOfStocks.map((each) => {
+	// 				return { ticker: each.ticker, name: each.name };
+	// 			})
+	// 		);
+	// 	} else {
+	// 		console.log(JSON.parse(localStorage.getItem("availableStocks")));
+	// 		let flatmapformat = JSON.parse(
+	// 			localStorage.getItem("availableStocks")
+	// 		).map((each) => {
+	// 			return { ticker: each.ticker, name: each.name };
+	// 		});
+	// 		// console.log(flatmapformat);
+	// 		manuallyList(flatmapformat);
+	// 		setMasterStocks(flatmapformat);
+	// 	}
+	// });
 
 	let inputref;
 	onCleanup(() => setAvailableStocks([]));
@@ -85,8 +88,6 @@ const SearchBox = (props) => {
 			<div
 				classList={{
 					[styles.searchBox]: true,
-					skeleton: grabbedListObject.loading,
-					splash: !grabbedListObject.loading,
 				}}
 			>
 				<input
@@ -94,7 +95,7 @@ const SearchBox = (props) => {
 					maxLength="4"
 					ref={inputref}
 					placeholder={
-						grabbedListObject.loading ? "Loading..." : `Search stock by symbol`
+						 `Search stock by symbol`
 					}
 					className={styles.searchBoxInput}
 					onInput={(e) => handleInputChange(e)}
